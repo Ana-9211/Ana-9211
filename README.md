@@ -5,13 +5,30 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05033?style=for-the-badge&logo=git&logoColor=white)
 
-## GitHub Stats:
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Ana-9211&theme=dark&hide_border=false&include_all_commits=true&count_private=true)
+---
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Ana-9211&theme=dark&hide_border=false&layout=compact)
+## GitHub Stats:
+
+<a href="https://github.com/anuraghazra/github-readme-stats">
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=Ana-9211&show_icons=true&theme=dark&include_all_commits=true&count_private=true" />
+</a>
+
+<a href="https://github.com/anuraghazra/github-readme-stats">
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Ana-9211&layout=compact&langs_count=7&theme=dark" />
+</a>
+
+---
 
 ## GitHub Trophies:
-![GitHub Trophies](https://github-profile-trophy.vercel.app/?username=Ana-9211&theme=radical&no-frame=true&no-bg=false&margin-w=4)
+
+<a href="https://github.com/ryo-ma/github-profile-trophy">
+  <img src="https://github-profile-trophy.vercel.app/?username=Ana-9211&theme=dark_dimmed&no-frame=true&margin-w=4" />
+</a>
+
+---
 
 ## Contribution Graph:
-[![Contribution Calendar](https://github-readme-activity-graph.vercel.app/graph?username=Ana-9211&theme=react-dark&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+
+<a href="https://github.com/ashutosh00710/github-readme-activity-graph">
+  <img alt="Contribution Graph" src="https://github-readme-activity-graph.vercel.app/graph?username=Ana-9211&theme=github-dark" />
+</a>
