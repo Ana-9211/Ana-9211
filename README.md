@@ -80,26 +80,6 @@ i'm drawn to **cybersecurity**, **systems**, and making tools that feel good to 
 
 ---
 
-### `trophies`
-
-<div align="center">
-
-<img src="https://github-profile-trophy.vercel.app/?username=Ana-9211&theme=onestar&no-bg=true&no-frame=true&column=6&margin-w=10" />
-
-</div>
-
----
-
-### `skyline`
-
-<div align="center">
-
-[![GitCity Skyline](https://gitcity.natrajx.in/api/skyline?username=Ana-9211&theme=aurora)](https://gitcity.natrajx.in/?username=Ana-9211)
-
-</div>
-
----
-
 <div align="center">
 
 *built with care, caffeine, and occasional chaos* ✨
