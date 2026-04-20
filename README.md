@@ -1,11 +1,11 @@
 <div align="center">
 
 <!-- HEADER -->
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=300&size=24&duration=3000&pause=1000&color=C9B1FF&center=true&vCenter=true&multiline=true&width=500&height=70&lines=hi%2C+i'm+anagha+%E2%9C%A8;cs+undergrad+%C2%B7+builder+%C2%B7+security+nerd" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=300&size=24&duration=3000&pause=1000&color=C9B1FF&center=true&vCenter=true&width=720&height=70&lines=hi%2C+i'm+anagha+%E2%9C%A8;cs+undergrad+%C2%B7+developer+%C2%B7+security+nerd" alt="Typing SVG" />
 
 <br>
 
-`she/her` · **cs @ pesu** · building things that work
+`she/her` · **cs @ pesu** · software developer
 
 <br>
 
