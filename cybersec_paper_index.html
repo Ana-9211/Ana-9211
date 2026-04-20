@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberSec Research Index 2025–26</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #00ff88;
+    --accent2: #ff6b35;
+    --accent3: #7b61ff;
+    --accent4: #00cfff;
+    --text: #e0e0f0;
+    --muted: #6b6b8a;
+    --tag-bg: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 24px 32px 20px;
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.97);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  input[type="text"] {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    width: 280px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: var(--accent); }
+  input[type="text"]::placeholder { color: var(--muted); }
+
+  .venue-filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 6px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+  .filter-btn.venue-sp.active { background: var(--accent2); border-color: var(--accent2); }
+  .filter-btn.venue-ccs.active { background: var(--accent3); border-color: var(--accent3); }
+  .filter-btn.venue-ndss.active { background: var(--accent4); border-color: var(--accent4); }
+
+  .stats {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 120px);
+  }
+
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky;
+    top: 120px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); }
+
+  .sidebar-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    padding: 0 20px 12px;
+    text-transform: uppercase;
+  }
+
+  .topic-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 20px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .topic-btn:hover { color: var(--text); background: var(--surface); }
+  .topic-btn.active { color: var(--accent); border-left-color: var(--accent); background: var(--surface); }
+
+  .topic-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    background: var(--tag-bg);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  .content {
+    padding: 24px 32px;
+    overflow-y: auto;
+  }
+
+  .topic-section {
+    margin-bottom: 40px;
+  }
+
+  .topic-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topic-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .topic-pill {
+    font-size: 10px;
+    padding: 2px 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .papers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .paper-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    background: var(--surface);
+  }
+  .paper-row:hover { border-color: var(--border); }
+  .paper-row.hidden { display: none; }
+
+  .venue-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 3px 6px;
+    white-space: nowrap;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .venue-usenix { background: rgba(0,255,136,0.1); color: var(--accent); border: 1px solid rgba(0,255,136,0.3); }
+  .venue-sp { background: rgba(255,107,53,0.1); color: var(--accent2); border: 1px solid rgba(255,107,53,0.3); }
+  .venue-ccs { background: rgba(123,97,255,0.1); color: var(--accent3); border: 1px solid rgba(123,97,255,0.3); }
+  .venue-ndss { background: rgba(0,207,255,0.1); color: var(--accent4); border: 1px solid rgba(0,207,255,0.3); }
+
+  .paper-title {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .paper-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .paper-title a:hover { color: var(--accent); }
+
+  .paper-award {
+    font-size: 10px;
+    color: #ffd700;
+    font-family: 'IBM Plex Mono', monospace;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 60px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    display: none;
+  }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .legend-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>// CYBERSEC PAPER INDEX</h1>
+    <span class="subtitle">USENIX '25 · IEEE S&P '25 · ACM CCS '25 · NDSS '26</span>
+  </div>
+  <div class="controls">
+    <input type="text" id="search" placeholder="search titles..." oninput="filterAll()">
+    <div class="venue-filters">
+      <button class="filter-btn active" onclick="toggleVenue('all', this)">ALL</button>
+      <button class="filter-btn venue-usenix" onclick="toggleVenue('usenix', this)">USENIX</button>
+      <button class="filter-btn venue-sp" onclick="toggleVenue('sp', this)">S&P</button>
+      <button class="filter-btn venue-ccs" onclick="toggleVenue('ccs', this)">CCS</button>
+      <button class="filter-btn venue-ndss" onclick="toggleVenue('ndss', this)">NDSS</button>
+    </div>
+    <div class="stats" id="stats">loading...</div>
+  </div>
+</header>
+
+<div class="main">
+  <div class="sidebar">
+    <div class="sidebar-title">Topics</div>
+    <div id="topic-nav"></div>
+  </div>
+  <div class="content" id="content"></div>
+</div>
+
+<script>
+const VENUE_URLS = {
+  usenix: "https://www.usenix.org/conference/usenixsecurity25/technical-sessions",
+  sp: "https://www.ieee-security.org/TC/SP2025/program.html",
+  ccs: "https://www.sigsac.org/ccs/CCS2025/accepted-papers.html",
+  ndss: "https://www.ndss-symposium.org/ndss2026/accepted-papers/"
+};
+
+const papers = [
+  // ══════════════════════════════════════════════════════════════
+  // LLM & AI SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"StruQ: Defending Against Prompt Injection with Structured Queries", v:"usenix", topic:"LLM & AI Security"},
+  {t:"PAPILLON: Efficient and Stealthy Fuzz Testing-Powered Jailbreaks for LLMs", v:"usenix", topic:"LLM & AI Security"},
+  {t:"PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation", v:"usenix", topic:"LLM & AI Security"},
+  {t:"JBShield: Defending Large Language Models from Jailbreak Attacks", v:"usenix", topic:"LLM & AI Security"},
+  {t:"SelfDefend: LLMs Can Defend Themselves against Jailbreaking", v:"usenix", topic:"LLM & AI Security"},
+  {t:"Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack", v:"usenix", topic:"LLM & AI Security"},
+  {t:"When LLMs Go Online: The Emerging Threat of Web-Enabled LLMs", v:"usenix", topic:"LLM & AI Security"},
+  {t:"Machine Against the RAG: Jamming Retrieval-Augmented Generation with Blocker Documents", v:"usenix", topic:"LLM & AI Security"},
+  {t:"Evaluating LLM-based Personal Information Extraction and Countermeasures", v:"usenix", topic:"LLM & AI Security"},
+  {t:"LLMmap: Fingerprinting for Large Language Models", v:"usenix", topic:"LLM & AI Security"},
+  {t:"Synthetic Artifact Auditing: Tracing LLM-Generated Synthetic Data Usage", v:"usenix", topic:"LLM & AI Security"},
+  {t:"Generated Data with Fake Privacy: Hidden Dangers of Fine-tuning LLMs on Generated Data", v:"usenix", topic:"LLM & AI Security"},
+  {t:"We Have a Package for You! Package Hallucinations by Code Generating LLMs", v:"usenix", topic:"LLM & AI Security", award:"Distinguished Paper"},
+  {t:"Mirage in the Eyes: Hallucination Attack on Multi-modal Large Language Models", v:"usenix", topic:"LLM & AI Security"},
+  {t:"PATCHAGENT: A Practical Program Repair Agent Mimicking Human Expertise", v:"usenix", topic:"LLM & AI Security"},
+  {t:"APPATCH: Automated Adaptive Prompting LLMs for Real-World Software Vulnerability Patching", v:"usenix", topic:"LLM & AI Security"},
+  {t:"Low-Cost and Comprehensive Non-textual Input Fuzzing with LLM-Synthesized Input Generators", v:"usenix", topic:"LLM & AI Security"},
+  {t:"Supporting Human Raters with Detection of Harmful Content using LLMs", v:"sp", topic:"LLM & AI Security"},
+  {t:"BAIT: Large Language Model Backdoor Scanning by Inverting Attack Target", v:"sp", topic:"LLM & AI Security"},
+  {t:"Oedipus: LLM-enchanced Reasoning CAPTCHA Solver", v:"ccs", topic:"LLM & AI Security"},
+  {t:"JsDeObsBench: Measuring and Benchmarking LLMs for JavaScript Deobfuscation", v:"ccs", topic:"LLM & AI Security"},
+  {t:"Measuring and Augmenting Large Language Models for Solving CTF Challenges", v:"ccs", topic:"LLM & AI Security"},
+  {t:"Differentiation-Based Extraction of Proprietary Data from Fine-tuned LLMs", v:"ccs", topic:"LLM & AI Security"},
+  {t:"Give LLMs a Security Course: Securing RAG Code Generation via Knowledge Injection", v:"ccs", topic:"LLM & AI Security"},
+  {t:"Prompt Inference Attack on Distributed LLM Inference Frameworks", v:"ccs", topic:"LLM & AI Security"},
+  {t:"ImportSnare: Directed Code Manual Hijacking in Retrieval-Augmented Code Generation", v:"ccs", topic:"LLM & AI Security"},
+  {t:"Here Comes The AI Worm: Preventing Propagation of Adversarial Self-Replicating Prompts", v:"ccs", topic:"LLM & AI Security"},
+  {t:"FlippedRAG: Black-Box Opinion Manipulation Attacks to RAG of LLMs", v:"ccs", topic:"LLM & AI Security"},
+  {t:"You Can't Steal Nothing: Mitigating Prompt Leakages in LLMs via System Vectors", v:"ccs", topic:"LLM & AI Security"},
+  {t:"SecAlign: Defending Against Prompt Injection with Preference Optimization", v:"ccs", topic:"LLM & AI Security"},
+  {t:"GASLITEing the Retrieval: Exploring Vulnerabilities in Dense Embedding-based Search", v:"ccs", topic:"LLM & AI Security"},
+  {t:"YouthSafe: A Youth-Centric Safety Benchmark for Large Language Models", v:"ccs", topic:"LLM & AI Security"},
+  {t:"AgentSentinel: End-to-End and Real-Time Security Defense Framework for Computer-Use Agents", v:"ccs", topic:"LLM & AI Security"},
+  {t:"Can Personal Health Information Be Secured in LLM? Privacy Attack and Defense", v:"ccs", topic:"LLM & AI Security"},
+  {t:"Cascading Adversarial Bias from Injection to Distillation in Language Models", v:"ccs", topic:"LLM & AI Security"},
+  {t:"A Causal Perspective for Enhancing Jailbreak Attack and Defense", v:"ndss", topic:"LLM & AI Security"},
+  {t:"ACE: A Security Architecture for LLM-Integrated App Systems", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Attention is All You Need to Defend Against Indirect Prompt Injection Attacks", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Benchmarking and Understanding Safety Risks in AI Character Platforms", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Beyond Jailbreak: Unveiling Risks in LLM Applications from Blurred Capability Boundaries", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Bleeding Pathways: Vanishing Discriminability in LLM Hidden States Fuels Jailbreak Attacks", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Cache Me, Catch You: Cache Related Security Threats in LLM Serving Frameworks", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Chasing Shadows: Pitfalls in LLM Security Research", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Chimera: Harnessing Multi-Agent LLMs for Automatic Insider Threat Simulation", v:"ndss", topic:"LLM & AI Security"},
+  {t:"DUALBREACH: Efficient Dual-Jailbreaking via Target-Driven Initialization", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Incident Response Planning Using a Lightweight LLM with Reduced Hallucination", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Les Dissonances: Cross-Tool Harvesting in Pool-of-Tools Empowered LLM Agents", v:"ndss", topic:"LLM & AI Security"},
+  {t:"NeuroStrike: Neuron-Level Attacks on Aligned LLMs", v:"ndss", topic:"LLM & AI Security"},
+  {t:"ObliInjection: Order-Oblivious Prompt Injection Attack to LLM Agents", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Odysseus: Jailbreaking Commercial Multimodal LLM-integrated Systems via Dual Steganography", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Paladin: Defending LLM-enabled Phishing Emails with a New Trigger-Tag Paradigm", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Prεεmpt: Sanitizing Sensitive Prompts for LLMs", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Prompt Injection Attack to Tool Selection in LLM Agents", v:"ndss", topic:"LLM & AI Security"},
+  {t:"SAGA: A Security Architecture for Governing AI Agentic Systems", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Shadow in the Cache: Unveiling Privacy Risks of KV-cache in LLM Inference", v:"ndss", topic:"LLM & AI Security"},
+  {t:"There is No War in Ba Sing Se: Global Analysis of Content Moderation in LLMs", v:"ndss", topic:"LLM & AI Security"},
+  {t:"ThinkTrap: Denial-of-Service Attacks against Black-box LLM Services via Infinite Thinking", v:"ndss", topic:"LLM & AI Security"},
+  {t:"Trust Me, I Know This Function: Hijacking LLM Static Analysis using Bias", v:"ndss", topic:"LLM & AI Security"},
+  {t:"VeriLoRA: Fine-Tuning LLMs with Verifiable Security via Zero-Knowledge Proofs", v:"ndss", topic:"LLM & AI Security"},
+  {t:"When Cache Poisoning Meets LLM Systems: Semantic Cache Poisoning", v:"ndss", topic:"LLM & AI Security"},
+  {t:"zkGPT: An Efficient Non-interactive Zero-knowledge Proof Framework for LLM Inference", v:"usenix", topic:"LLM & AI Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // ML SECURITY (Adversarial ML, Backdoors, Model Security)
+  // ══════════════════════════════════════════════════════════════
+  {t:"DP-BREM: Differentially-Private and Byzantine-Robust Federated Learning", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"PoiSAFL: Scalable Poisoning Attack Framework to Byzantine-resilient Semi-asynchronous FL", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Revisiting Training-Inference Trigger Intensity in Backdoor Attacks", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Persistent Backdoor Attacks in Continual Learning", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"From Purity to Peril: Backdooring Merged Models From 'Harmless' Benign Components", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Towards Understanding and Enhancing Security of Proof-of-Training for DNN Model Ownership", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"THEMIS: Towards Practical IP Protection for Post-Deployment On-Device Deep Learning Models", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Dormant: Defending against Pose-driven Human Image Animation", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Pretender: Universal Active Defense against Diffusion Finetuning Attacks", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Watch the Watchers! Security Risks of Robustness-Enhancing Diffusion Models", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Data-Free Model-Related Attacks: Unleashing the Potential of Generative AI", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Data Duplication: A Novel Multi-Purpose Attack Paradigm in Machine Unlearning", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Fighting Fire with Fire: Continuous Attack for Adversarial Android Malware Detection", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Robustifying ML-powered Network Classifiers with PANTS", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"AGNNCert: Defending Graph Neural Networks against Arbitrary Perturbations", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"CAMP in the Odyssey: Provably Robust Reinforcement Learning", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Atkscopes: Multiresolution Adversarial Perturbation as Unified Attack on Perceptual Hashing", v:"usenix", topic:"ML Security & Adversarial ML"},
+  {t:"Preference Poisoning Attacks on Reward Model Learning", v:"sp", topic:"ML Security & Adversarial ML"},
+  {t:"Architectural Neural Backdoors from First Principles", v:"sp", topic:"ML Security & Adversarial ML"},
+  {t:"Query Provenance Analysis: Efficient and Robust Defense against Query-based Black-box Attacks", v:"sp", topic:"ML Security & Adversarial ML"},
+  {t:"Fight Fire with Fire: Combating Adversarial Patch Attacks using Pattern-randomized Defensive Patches", v:"sp", topic:"ML Security & Adversarial ML"},
+  {t:"UnMarker: A Universal Attack on Defensive Image Watermarking", v:"sp", topic:"ML Security & Adversarial ML"},
+  {t:"My Model is Malware to You: Transforming AI Models into Malware by Abusing TensorFlow APIs", v:"sp", topic:"ML Security & Adversarial ML"},
+  {t:"Evaluating the robustness of a production malware detection system to transferable adversarial attacks", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"Sylva: Tailoring Personalized Adversarial Defense in Pre-trained Models", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"One Surrogate to Fool Them All: Universal Transferable Adversarial Attacks with CLIP", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"Towards Backdoor Stealthiness in Model Parameter Space", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"FilterFL: Knowledge Filtering-based Data-Free Backdoor Defense for Federated Learning", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"PoisonSpot: Precise Spotting of Clean-Label Backdoors via Fine-Grained Training Provenance", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"VillainNet: Targeted Poisoning Attacks Against SuperNets Along Accuracy-Latency Pareto Frontier", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"DeBackdoor: A Deductive Framework for Detecting Backdoor Attacks on Deep Models", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"On Hyperparameters and Backdoor-Resistance in Horizontal Federated Learning", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"Rethinking Machine Unlearning in Image Generation Models", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"Prototype Surgery: Tailoring Neural Prototypes for Efficient Machine Unlearning", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"Split Unlearning", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"Provable Repair of Deep Neural Network Defects by Preimage Synthesis", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"What's Pulling the Strings? Evaluating Integrity via Concept Shift", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"MIMIR: Masked Image Modeling for Mutual Information-based Adversarial Robustness", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"Constructive Noise Defeats Adversarial Noise: Adversarial Example Detection for Commercial DNNs", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"InverTune: A Backdoor Defense Method for Multimodal Contrastive Learning", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"Memory Backdoor Attacks on Neural Networks", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"Rounding-Guided Backdoor Injection in Deep Learning Model Quantization", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"CatBack: Universal Backdoor Attacks on Tabular Data via Categorical Encoding", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"Causal-Guided Detoxify Backdoor Attack of Open-Weight LoRA Models", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"PANDORA: Lightweight Adversarial Defense for Edge IoT using Uncertainty-Aware Metric Learning", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"SVDefense: Effective Defense against Gradient Inversion Attacks via Singular Value Decomposition", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"A Unified Defense Framework Against Membership Inference in Federated Learning", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"Adversarial Observations in Weather Forecasting", v:"ccs", topic:"ML Security & Adversarial ML"},
+  {t:"Targeted Physical Evasion Attacks in the Near-Infrared Domain", v:"ndss", topic:"ML Security & Adversarial ML"},
+  {t:"Deep Learning from Imperfectly Labeled Malware Data", v:"ccs", topic:"ML Security & Adversarial ML"},
+
+  // ══════════════════════════════════════════════════════════════
+  // PRIVACY & MEMBERSHIP INFERENCE
+  // ══════════════════════════════════════════════════════════════
+  {t:"SoK: On Gradient Leakage in Federated Learning", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"Enhanced Label-Only Membership Inference Attacks with Fewer Queries", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"Towards Label-Only Membership Inference Attack against Pre-trained LLMs", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"Membership Inference Attacks Against Vision-Language Models", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"Disparate Privacy Vulnerability: Targeted Attribute Inference Attacks and Defenses", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"Task-Oriented Training Data Privacy Protection for Cloud-based Model Training", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"I Can Tell Your Secrets: Inferring Privacy Attributes from Mini-app Interaction History", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"How Researchers De-Identify Data in Practice", v:"usenix", topic:"Privacy & Membership Inference"},
+  {t:"Membership Inference Attacks as Privacy Tools: Reliability, Disparity and Ensemble", v:"ccs", topic:"Privacy & Membership Inference"},
+  {t:"Anonymity Unveiled: A Practical Framework for Auditing Data Use in Deep Learning Models", v:"ccs", topic:"Privacy & Membership Inference"},
+  {t:"Riddle Me This! Stealthy Membership Inference for Retrieval-Augmented Generation", v:"ccs", topic:"Privacy & Membership Inference"},
+  {t:"DCMI: A Differential Calibration Membership Inference Attack Against RAG", v:"ccs", topic:"Privacy & Membership Inference"},
+  {t:"In-Context Probing for Membership Inference in Fine-Tuned Language Models", v:"ndss", topic:"Privacy & Membership Inference"},
+  {t:"Was My Data Used for Training? Membership Inference in Open-Source LLMs via Neural Activations", v:"ndss", topic:"Privacy & Membership Inference"},
+  {t:"Cascading and Proxy Membership Inference Attacks", v:"ndss", topic:"Privacy & Membership Inference"},
+  {t:"Exposing Privacy Risks in Anonymizing Clinical Data: Combinatorial Refinement Attacks", v:"ccs", topic:"Privacy & Membership Inference"},
+  {t:"PIIxel Leaks: Passive Identification of PII Leakage through Meta's Pixel", v:"ccs", topic:"Privacy & Membership Inference"},
+  {t:"Privacy Audit as Bits Transmission: (Im)possibilities for Audit by One Run", v:"usenix", topic:"Privacy & Membership Inference"},
+
+  // ══════════════════════════════════════════════════════════════
+  // DIFFERENTIAL PRIVACY
+  // ══════════════════════════════════════════════════════════════
+  {t:"Differentially Private Release of Israel's National Registry of Live Births", v:"sp", topic:"Differential Privacy"},
+  {t:"Augmented Shuffle Protocols for Accurate and Robust Frequency Estimation under DP", v:"sp", topic:"Differential Privacy"},
+  {t:"Meeting Utility Constraints in Differential Privacy: A Privacy-Boosting Approach", v:"sp", topic:"Differential Privacy"},
+  {t:"Beyond Statistical Estimation: Differentially Private Individual Computation via Shuffling", v:"usenix", topic:"Differential Privacy"},
+  {t:"Further Study on Frequency Estimation under Local Differential Privacy", v:"usenix", topic:"Differential Privacy"},
+  {t:"Accuracy for Differentially Private Quotients by Fractional Uncertainties", v:"ccs", topic:"Differential Privacy"},
+  {t:"DPImageBench: A Unified Benchmark for Differentially Private Image Synthesis", v:"ccs", topic:"Differential Privacy"},
+  {t:"Secure Noise Sampling for Differentially Private Collaborative Learning", v:"ccs", topic:"Differential Privacy"},
+  {t:"Mitigating Data Poisoning Attacks to Local Differential Privacy", v:"ccs", topic:"Differential Privacy"},
+  {t:"Poisoning Attacks to Local Differential Privacy for Ranking Estimation", v:"ccs", topic:"Differential Privacy"},
+  {t:"PAnDA: Rethinking Metric Differential Privacy Optimization at Scale", v:"ccs", topic:"Differential Privacy"},
+  {t:"Timing Attacks on Differential Privacy are Practical", v:"ccs", topic:"Differential Privacy"},
+  {t:"Harnessing Sparsification in Federated Learning: Secure, Efficient, and Differentially Private", v:"ccs", topic:"Differential Privacy"},
+  {t:"The Importance of Being Discrete: Measuring Impact of Discretization in DP Synthetic Data", v:"ccs", topic:"Differential Privacy"},
+  {t:"PLRV-O: Advancing Differentially Private Deep Learning via Privacy Loss Random Variable Opt.", v:"ccs", topic:"Differential Privacy"},
+  {t:"Augmented Shuffle Differential Privacy Protocols for Large-Domain Data", v:"ndss", topic:"Differential Privacy"},
+  {t:"Revisiting Differentially Private Hyper-parameter Tuning", v:"ndss", topic:"Differential Privacy"},
+  {t:"To Shuffle or not to Shuffle: Auditing DP-SGD with Shuffling", v:"ndss", topic:"Differential Privacy"},
+  {t:"PrivATE: Differentially Private Average Treatment Effect Estimation", v:"ndss", topic:"Differential Privacy"},
+  {t:"One-Sided Bounded Noise: Theory, Optimization Algorithms and Applications", v:"ccs", topic:"Differential Privacy"},
+
+  // ══════════════════════════════════════════════════════════════
+  // HARDWARE & MICROARCHITECTURE SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"BarraCUDA: Edge GPUs do Leak DNN Weights", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"Not so Refreshing: Attacking GPUs using RFM Rowhammer Mitigation", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"Phantom Trails: Practical Pre-Silicon Discovery of Transient Data Leaks", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"When Good Kernel Defenses Go Bad: Kernel Exploits via Defense-Amplified TLB Side-Channel", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"Achilles: A Formal Framework of Leaking Secrets from Signature Schemes via Rowhammer", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"FLOP: Breaking the Apple M3 CPU via False Load Output Predictions", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"Branch Privilege Injection: Compromising Spectre v2 Hardware Mitigations", v:"usenix", topic:"Hardware & Microarchitecture Security", award:"Distinguished Paper"},
+  {t:"Posthammer: Pervasive Browser-based Rowhammer Attacks with Postponed Refresh Commands", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"DiskSpy: Long-Range Covert-Channel via mmWave Sensing of HDD Vibrations", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"TimeTravel: Real-time Timing Drift Attack on System Time Using Acoustic Waves", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"TikTag: Breaking ARM's Memory Tagging Extension with Speculative Execution", v:"sp", topic:"Hardware & Microarchitecture Security"},
+  {t:"SLAP: Data Speculation Attacks via Load Address Prediction on Apple Silicon", v:"sp", topic:"Hardware & Microarchitecture Security"},
+  {t:"BadRAM: Practical Memory Aliasing Attacks on Trusted Execution Environments", v:"sp", topic:"Hardware & Microarchitecture Security"},
+  {t:"Peek-a-Walk: Leaking Secrets via Page Walk Side Channels", v:"sp", topic:"Hardware & Microarchitecture Security"},
+  {t:"Breaking the Barrier: Post-Barrier Spectre Attacks", v:"sp", topic:"Hardware & Microarchitecture Security"},
+  {t:"PQ-Hammer: End-to-end Key Recovery Attacks on PQC Using Rowhammer", v:"sp", topic:"Hardware & Microarchitecture Security"},
+  {t:"GhostCache: Timer- and Counter-Free Cache Attacks on RISC-V and ARM Chips", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"CHaRM: Checkpointed and Hashed Counters for Flexible Rowhammer Mitigation", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"ExfilState: Automated Discovery of Timer-Free Cache Side Channels on ARM CPUs", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"An Empirical Study Measuring In-The-Wild Cryptographic Microarchitectural Side-Channel Patches", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"Systematic Assessment of Randomized Cache Designs against Cache Occupancy", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"Secure Caches for Compartmentalized Software", v:"usenix", topic:"Hardware & Microarchitecture Security"},
+  {t:"WireTap: Breaking Server SGX via DRAM Bus Interposition", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"Heracles: Chosen Plaintext Attack on AMD SEV-SNP", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"RMPocalypse: How a Catch-22 Breaks AMD SEV-SNP", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"FLIPPYRAM: A Large-Scale Study of Rowhammer Prevalence", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"Memory Band-Aid: A Principled Rowhammer Defense-in-Depth", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"OCCUPY+PROBE: Cross-Privilege Branch Target Buffer Side-Channel Attacks", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"Eviction Notice: Reviving and Advancing Page Cache Attacks", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"Peering Inside the Black-Box: Model Architecture Snooping via GPU Electromagnetic Side-Channel", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"Exploiting TLBs in Virtualized GPUs for Cross-VM Side-Channel Attacks", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"Continuous User Behavior Monitoring using DNS Cache Timing Attacks", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"PortRush: Detect Write Port Contention Side-Channel Vulnerabilities via Hardware Fuzzing", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"MoEcho: Exploiting Side-Channel Attacks in Mixture-of-Experts LLMs", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"CipherSteal: Stealing Input Data from TEE-Shielded Neural Networks with Ciphertext Side Channels", v:"sp", topic:"Hardware & Microarchitecture Security"},
+  {t:"Pixnapping: Bringing Pixel Stealing out of the Stone Age", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+  {t:"SNPeek: Side-Channel Analysis for Privacy Applications on Confidential VMs", v:"ndss", topic:"Hardware & Microarchitecture Security"},
+  {t:"MileSan: Detecting Exploitable Microarchitectural Leakage via Differential Hardware-Software Taint Tracking", v:"ccs", topic:"Hardware & Microarchitecture Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // TRUSTED EXECUTION ENVIRONMENTS (TEEs)
+  // ══════════════════════════════════════════════════════════════
+  {t:"Dorami: Privilege Separating Security Monitor on RISC-V TEEs", v:"usenix", topic:"Trusted Execution Environments"},
+  {t:"TLBlur: Compiler-Assisted Hardening against Controlled Channels on Intel SGX", v:"usenix", topic:"Trusted Execution Environments"},
+  {t:"Serverless Functions Made Confidential and Efficient with Split Containers", v:"usenix", topic:"Trusted Execution Environments"},
+  {t:"BlueGuard: Accelerated Host and Guest Introspection Using DPUs", v:"usenix", topic:"Trusted Execution Environments"},
+  {t:"Enabling Low-Cost Secure Computing on Untrusted In-Memory Architectures", v:"usenix", topic:"Trusted Execution Environments"},
+  {t:"Phantom: Privacy-Preserving DNN Model Obfuscation in Heterogeneous TEE and GPU System", v:"usenix", topic:"Trusted Execution Environments"},
+  {t:"PORTAL: Fast and Secure Device Access with Arm CCA", v:"sp", topic:"Trusted Execution Environments"},
+  {t:"TensorShield: Safeguarding On-Device Inference by Shielding Critical DNN Tensors with TEE", v:"ccs", topic:"Trusted Execution Environments"},
+  {t:"Attestable builds: compiling verifiable binaries on untrusted systems using TEEs", v:"ccs", topic:"Trusted Execution Environments"},
+  {t:"Automated Code Annotation with LLMs for Establishing TEE Boundaries", v:"ndss", topic:"Trusted Execution Environments"},
+  {t:"EXIA: Trusted Transitions for Enclaves via External-Input Attestation", v:"ndss", topic:"Trusted Execution Environments"},
+  {t:"A System Framework to Symbolically Explore Intel TDX Module Execution", v:"ccs", topic:"Trusted Execution Environments"},
+  {t:"DNN Latency Sequencing: Extracting DNN Architectures from Intel SGX Enclaves", v:"ndss", topic:"Trusted Execution Environments"},
+  {t:"BadAML: Exploiting Legacy Firmware Interfaces to Compromise Confidential VMs", v:"ccs", topic:"Trusted Execution Environments"},
+  {t:"MOLE: Breaking GPU TEE with GPU-Embedded MCU", v:"ccs", topic:"Trusted Execution Environments"},
+  {t:"SoK: Analysis of Accelerator TEE Designs", v:"ndss", topic:"Trusted Execution Environments"},
+  {t:"Heracles: Chosen Plaintext Attack on AMD SEV-SNP", v:"ccs", topic:"Trusted Execution Environments"},
+
+  // ══════════════════════════════════════════════════════════════
+  // FUZZING & PROGRAM ANALYSIS
+  // ══════════════════════════════════════════════════════════════
+  {t:"AidFuzzer: Adaptive Interrupt-Driven Firmware Fuzzing via Run-Time State Recognition", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"Fuzzing the PHP Interpreter via Dataflow Fusion", v:"usenix", topic:"Fuzzing & Program Analysis", award:"Distinguished Paper"},
+  {t:"Waltzz: WebAssembly Runtime Fuzzing with Stack-Invariant Transformation", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"Encarsia: Evaluating CPU Fuzzers via Automatic Bug Injection", v:"usenix", topic:"Fuzzing & Program Analysis", award:"Distinguished Artifact"},
+  {t:"MBFuzzer: A Multi-Party Protocol Fuzzer for MQTT Brokers", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"From Alarms to Real Bugs: Multi-target Multi-step Directed Greybox Fuzzing", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"Robust, Efficient, and Widely Available Greybox Fuzzing for COTS Binaries", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"CoreCrisis: Threat-Guided and Context-Aware Iterative Learning and Fuzzing of 5G Core Networks", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"RGFuzz: Rule-Guided Fuzzer for WebAssembly Runtimes", v:"sp", topic:"Fuzzing & Program Analysis"},
+  {t:"Predator: Directed Web Application Fuzzing for Efficient Vulnerability Validation", v:"sp", topic:"Fuzzing & Program Analysis"},
+  {t:"FirmRCA: Towards Post-Fuzzing Analysis on ARM Embedded Firmware", v:"sp", topic:"Fuzzing & Program Analysis"},
+  {t:"SyzSpec: Specification Generation for Linux Kernel Fuzzing", v:"ccs", topic:"Fuzzing & Program Analysis"},
+  {t:"RVISmith: Fuzzing Compilers for RVV Intrinsics", v:"ccs", topic:"Fuzzing & Program Analysis"},
+  {t:"Fuzzing Processing Pipelines for Zero-Knowledge Circuits", v:"ccs", topic:"Fuzzing & Program Analysis"},
+  {t:"SyzParam: Incorporating Runtime Parameters into Kernel Driver Fuzzing", v:"ccs", topic:"Fuzzing & Program Analysis"},
+  {t:"GenHuzz: An Efficient Generative Hardware Fuzzer", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"Fuzzilicon: A Post-Silicon Microcode-Guided x86 CPU Fuzzer", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"ADGFUZZ: Assignment Dependency-Guided Fuzzing for Robotic Vehicles", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"GoldenFuzz: Generative Golden Reference Hardware Fuzzing", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"HyperMirage: Direct State Manipulation in Hybrid Virtual CPU Fuzzing", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"MUTATO: Enhancing Fuzz Drivers with Adaptive API Option Mutation", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"ReFuzz: Reusing Tests for Processor Fuzzing with Contextual Bandits", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"RTCON: Context-Adaptive Function-Level Fuzzing for RTOS Kernels", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"SYSYPHUZZ: the Pressure of More Coverage", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"An LLM-Driven Fuzzing Framework for Detecting Logic Instruction Bugs in PLCs", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"BSFuzzer: Context-Aware Semantic Fuzzing for BLE Logic Flaw Detection", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"DOM-XSS Detection via Webpage Interaction Fuzzing and URL Component Synthesis", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"PromeFuzz: A Knowledge-Driven Approach to Fuzzing Harness Generation with LLMs", v:"ccs", topic:"Fuzzing & Program Analysis"},
+  {t:"Effective Directed Fuzzing with Hierarchical Scheduling for Web Vulnerability Detection", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"PhyFuzz: Detecting Sensor Vulnerabilities with Physical Signal Fuzzing", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"Protocol-Aware Firmware Rehosting for Effective Fuzzing of Embedded Network Stacks", v:"ccs", topic:"Fuzzing & Program Analysis"},
+  {t:"ChainFuzz: Exploiting Upstream Vulnerabilities in Open-Source Supply Chains", v:"usenix", topic:"Fuzzing & Program Analysis"},
+  {t:"A Qualitative Analysis of Fuzzing Tool Usability and Challenges", v:"ccs", topic:"Fuzzing & Program Analysis"},
+  {t:"FirmAgent: Leveraging Fuzzing to Assist LLM Agents with IoT Firmware Vulnerability Discovery", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"LLMBisect: Breaking Barriers in Bug Bisection with A Comparative Analysis Pipeline", v:"ndss", topic:"Fuzzing & Program Analysis"},
+  {t:"Efficiently Detecting DBMS Bugs through Bottom-up Syntax-based SQL Generation", v:"ndss", topic:"Fuzzing & Program Analysis"},
+
+  // ══════════════════════════════════════════════════════════════
+  // KERNEL & OS SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"System Register Hijacking: Compromising Kernel Integrity By Turning System Registers Against the System", v:"usenix", topic:"Kernel & OS Security"},
+  {t:"The Cost of Performance: Breaking ThreadX with Kernel Object Masquerading Attacks", v:"usenix", topic:"Kernel & OS Security"},
+  {t:"TYPEPULSE: Detecting Type Confusion Bugs in Rust Programs", v:"usenix", topic:"Kernel & OS Security"},
+  {t:"Await() a Second: Evading Control Flow Integrity by Hijacking C++ Coroutines", v:"usenix", topic:"Kernel & OS Security"},
+  {t:"Nothing is Unreachable: Automated Synthesis of Robust Code-Reuse Gadget Chains", v:"usenix", topic:"Kernel & OS Security", award:"Distinguished Artifact"},
+  {t:"Synthesis of Code-Reuse Attacks from p-code Programs", v:"usenix", topic:"Kernel & OS Security"},
+  {t:"Reviving Discarded Vulnerabilities: Exploiting Previously Unexploitable Linux Kernel Bugs", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"CROSS-X: Generalized and Stable Cross-Cache Attack on the Linux Kernel", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"Windows plays Jenga: Uncovering Design Weaknesses in Windows File System Security", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"Don't Panic! Finding Bugs Hidden Behind Rust Runtime Safety Checks", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"SoK: Take a Deep Step into Linux Kernel Hardening Effectiveness", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"DirtyFree: Simplified Data-Oriented Programming in the Linux Kernel", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"PhantomMap: GPU-Assisted Kernel Exploitation", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"SACK: Systematic Generation of Function Substitution Attacks Against CFI", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"Cross-Cache Attacks for the Linux Kernel via PCP Massaging", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"Fast Pointer Nullification for Use-After-Free Prevention", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"IsolatOS: Detecting Double Fetch Bugs in COTS RTOS by Re-enabling Kernel Isolation", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"RangeSanitizer: Detecting Memory Errors with Efficient Range Checks", v:"usenix", topic:"Kernel & OS Security"},
+  {t:"CMASan: Custom Memory Allocator-aware Address Sanitizer", v:"sp", topic:"Kernel & OS Security"},
+  {t:"Tide: Kernel-level Isolation Execution Environment on AArch64", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"Beyond Tag Collision: Cluster-based Memory Management for Tag-based Sanitizers", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"Chekhov's Gun: Uncovering Hidden Risks in macOS Application-Sandboxed PID-Domain Services", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"ropbot: Reimaging Code Reuse Attack Synthesis", v:"ndss", topic:"Kernel & OS Security"},
+  {t:"Needle in a Haystack: Vulnerability Hunting in the Windows ALPC Sea", v:"ccs", topic:"Kernel & OS Security"},
+  {t:"LinkGuard: A Lightweight State-Aware Runtime Guard Against Link Following Attacks in Windows", v:"ndss", topic:"Kernel & OS Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // NETWORK SECURITY & DDoS
+  // ══════════════════════════════════════════════════════════════
+  {t:"Lemon: Network-Wide DDoS Detection with Routing-Oblivious Per-Flow Measurement", v:"usenix", topic:"Network Security & DDoS"},
+  {t:"GLaDoS: Location-aware Denial-of-Service of Cellular Networks", v:"usenix", topic:"Network Security & DDoS"},
+  {t:"Assessing the Aftermath: Effects of Global Takedown against DDoS-for-hire Services", v:"usenix", topic:"Network Security & DDoS"},
+  {t:"Onions Got Puzzled: Challenges of Mitigating DoS in Tor Onion Services", v:"usenix", topic:"Network Security & DDoS"},
+  {t:"Characterizing Robocalls with Multiple Vantage Points", v:"sp", topic:"Network Security & DDoS"},
+  {t:"FlowSentry: Accelerating NetFlow-based DDoS Detection", v:"ccs", topic:"Network Security & DDoS"},
+  {t:"SISTAR: An Efficient DDoS Detection and Mitigation Framework Utilizing Programmable Data Planes", v:"ccs", topic:"Network Security & DDoS"},
+  {t:"SocketFilled: A New Cross Layer DoS Attack Against UDP-based Services on Linux", v:"ccs", topic:"Network Security & DDoS"},
+  {t:"NetRadar: Enabling Robust Carpet Bombing DDoS Detection", v:"ndss", topic:"Network Security & DDoS"},
+  {t:"On the Security Risks of Memory Adaptation and Augmentation in Data-plane DoS Mitigation", v:"ndss", topic:"Network Security & DDoS"},
+  {t:"Asymmetric Mempool DoS Security: Formal Definitions and Provably Secure Designs", v:"sp", topic:"Network Security & DDoS"},
+  {t:"Strategic Games and Zero Shot Attacks on Heavy-Hitter Network Flow Monitoring", v:"ndss", topic:"Network Security & DDoS"},
+
+  // ══════════════════════════════════════════════════════════════
+  // WEB SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"The Silent Danger in HTTP: Identifying HTTP Desync Vulnerabilities", v:"usenix", topic:"Web Security"},
+  {t:"The DOMino Effect: Detecting and Exploiting DOM Clobbering Gadgets", v:"usenix", topic:"Web Security"},
+  {t:"HyTrack: Resurrectable and Persistent Tracking Across Android Apps and the Web", v:"usenix", topic:"Web Security"},
+  {t:"Email Spoofing with SMTP Smuggling", v:"usenix", topic:"Web Security"},
+  {t:"Web Execution Bundles: Reproducible, Accurate, and Archivable Web Measurements", v:"usenix", topic:"Web Security"},
+  {t:"Double-Edged Shield: On the Fingerprintability of Customized Ad Blockers", v:"usenix", topic:"Web Security"},
+  {t:"Websites' Global Privacy Control Compliance at Scale and over Time", v:"usenix", topic:"Web Security"},
+  {t:"Demystifying the (In)Security of QR Code-based Login", v:"usenix", topic:"Web Security"},
+  {t:"Follow My Flow: Unveiling Client-Side Prototype Pollution Gadgets from One Million Websites", v:"sp", topic:"Web Security"},
+  {t:"'Only as Strong as the Weakest Link': On the Security of Brokered Single Sign-On", v:"sp", topic:"Web Security"},
+  {t:"The Power to Never Be Wrong: Evasions and Anachronistic Attacks Against Web Archives", v:"ccs", topic:"Web Security"},
+  {t:"Head(er)s Up! Detecting Security Header Inconsistencies in Browsers", v:"ccs", topic:"Web Security"},
+  {t:"In the DOM We Trust: Exploring Hidden Dangers of Reading from the DOM", v:"ccs", topic:"Web Security"},
+  {t:"Same Script, Different Behavior: Characterizing Platform-Specific Divergent JavaScript Execution", v:"ccs", topic:"Web Security"},
+  {t:"Byte by Byte: Unmasking Browser Fingerprinting at the Function Level using V8 Bytecode", v:"ccs", topic:"Web Security"},
+  {t:"Exploiting the Shared Storage API", v:"ccs", topic:"Web Security"},
+  {t:"Local Frames: Exploiting Inherited Origins to Bypass Content Blockers", v:"ccs", topic:"Web Security"},
+  {t:"Are your Sites Truly Isolated? Automatically Detecting Logic Bugs in Site Isolation", v:"ndss", topic:"Web Security"},
+  {t:"Anota: Identifying Business Logic Vulnerabilities via Annotation-Based Sanitization", v:"ndss", topic:"Web Security"},
+  {t:"Bullseye: Detecting Prototype Pollution in NPM Packages with Proof of Concept Exploits", v:"ndss", topic:"Web Security"},
+  {t:"Careless Retention and Management: Data Retention DoS Vulnerabilities in Java Web Containers", v:"usenix", topic:"Web Security"},
+  {t:"TranSPArent: Taint-style Vulnerability Detection in Generic Single Page Applications", v:"ndss", topic:"Web Security"},
+  {t:"Enhanced Web Application Security Through Proactive Dead Drop Resolver Remediation", v:"ccs", topic:"Web Security"},
+  {t:"Be Aware of What You Let Pass: Demystifying URL-based Authentication Bypass in Java Web Apps", v:"ccs", topic:"Web Security"},
+  {t:"BACScan: Automatic Black-Box Detection of Broken-Access-Control Vulnerabilities", v:"ccs", topic:"Web Security"},
+  {t:"RaceDB: Detecting Request Race Vulnerabilities in Database-Backed Web Applications", v:"sp", topic:"Web Security"},
+  {t:"MOCGuard: Automatically Detecting Missing-Owner-Check Vulnerabilities in Java Web Apps", v:"sp", topic:"Web Security"},
+  {t:"Lock the Door But Keep the Window Open: Extracting App-Protected Accessibility Info from Browsers", v:"ccs", topic:"Web Security"},
+  {t:"Vault Raider: Stealthy UI-based Attacks Against Password Managers in Desktop Environments", v:"ndss", topic:"Web Security"},
+  {t:"Deep Dive Into In-app Browsers: Uncovering Hidden Pitfalls in Certificate Validation", v:"ccs", topic:"Web Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // DNS & ROUTING SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"SoK: An Introspective Analysis of RPKI Security", v:"usenix", topic:"DNS & Routing Security"},
+  {t:"ImpROV: Measurement and Practical Mitigation of Collateral Damage in RPKI", v:"usenix", topic:"DNS & Routing Security"},
+  {t:"Lost in the Mists of Time: Expirations in DNS Footprints of Mobile Apps", v:"usenix", topic:"DNS & Routing Security"},
+  {t:"Misty Registry: An Empirical Study of Flawed Domain Registry Operation", v:"usenix", topic:"DNS & Routing Security"},
+  {t:"RebirthDay Attack: Reviving DNS Cache Poisoning with the Birthday Paradox", v:"ccs", topic:"DNS & Routing Security"},
+  {t:"Right the Ship: Assessing the Legitimacy of Invalid Routes in RPKI", v:"ccs", topic:"DNS & Routing Security"},
+  {t:"Off-Path TCP Exploits: PMTUD Breaks TCP Connection Isolation in IP Address Sharing", v:"ccs", topic:"DNS & Routing Security"},
+  {t:"Forward to Hell? On Misusing Transparent DNS Forwarders in Amplification Attacks", v:"ccs", topic:"DNS & Routing Security"},
+  {t:"Resolution Without Dissent: In-Path Per-Query Sanitization to Defeat Surreptitious DNS Comms", v:"sp", topic:"DNS & Routing Security"},
+  {t:"PathProb: Probabilistic Inference for BGP Route Leak Detection", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"Crack in the Armor: Underlying Infrastructure Threats to RPKI Publication Point Reachability", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"Demystifying RPKI-Invalid Prefixes: Hidden Causes and Security Risks", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"Pruning the Tree: Rethinking RPKI Architecture from the Ground up", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"Understanding the Stealthy BGP Hijacking Risk in the ROV Era", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"Should I Trust You? Rethinking the Principle of Zone-Based Isolation DNS Bailiwick Checking", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"One Email, Many Faces: A Deep Dive into Identity Confusion in Email Aliases", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"CoordMail: Exploiting SMTP Timeout to Coordinate Email Middleware for Convergence Amplification", v:"ndss", topic:"DNS & Routing Security"},
+  {t:"Validating Interior Gateway Routing Protocols via Equivalent Topology Synthesis", v:"ccs", topic:"DNS & Routing Security"},
+  {t:"NOKEScam: Understanding and Rectifying Non-Sense Keywords Spear Scam in Search Engines", v:"usenix", topic:"DNS & Routing Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // MOBILE & APP SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"HyTrack: Resurrectable and Persistent Tracking Across Android Apps and the Web", v:"usenix", topic:"Mobile & App Security"},
+  {t:"Born with a Silver Spoon: On the (In)Security of Native Granted App Privileges in Custom Android ROMs", v:"sp", topic:"Mobile & App Security"},
+  {t:"Analyzing the iOS Local Network Permission from a Technical and User Perspective", v:"sp", topic:"Mobile & App Security"},
+  {t:"Leaky Apps: Large-scale Analysis of Secrets Distributed in Android and iOS Apps", v:"ccs", topic:"Mobile & App Security"},
+  {t:"Parcel Mismatch Demystified: Addressing a Decade-Old Security Challenge in Android", v:"ccs", topic:"Mobile & App Security"},
+  {t:"Intent-aware Fuzzing for Android Hardened Application", v:"ccs", topic:"Mobile & App Security"},
+  {t:"WhisperTest: A Cross-Platform Library for iOS UI Automation", v:"ccs", topic:"Mobile & App Security"},
+  {t:"Fingerprinting SDKs for Mobile Apps: Understanding the Market for Device Fingerprinting", v:"ccs", topic:"Mobile & App Security"},
+  {t:"ForeDroid: Scenario-Aware Analysis for Android Malware Detection", v:"ccs", topic:"Mobile & App Security"},
+  {t:"Easy As Child's Play: An Empirical Study on Age Verification of Adult-Oriented Android Apps", v:"usenix", topic:"Mobile & App Security"},
+  {t:"CHAMELEOSCAN: Demystifying and Detecting iOS Chameleon Apps via LLM-Powered UI Exploration", v:"ndss", topic:"Mobile & App Security"},
+  {t:"Connecting the Dots: Linking Private User Data Across Messaging Apps", v:"ndss", topic:"Mobile & App Security"},
+  {t:"Cross-Boundary Mobile Tracking: Java-to-JavaScript Information Diffusion in WebViews", v:"ndss", topic:"Mobile & App Security"},
+  {t:"ChoiceJacking: Compromising Mobile Devices through Malicious Chargers", v:"usenix", topic:"Mobile & App Security"},
+  {t:"MVPNalyzer: Auditing Security & Privacy of Mobile VPNs", v:"ndss", topic:"Mobile & App Security"},
+  {t:"Combating Concept Drift with Explanatory Detection for Android Malware Classification", v:"ccs", topic:"Mobile & App Security"},
+  {t:"Adversarially Robust Assembly Language Model for Packed Executables Detection", v:"ccs", topic:"Mobile & App Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // IoT & EMBEDDED SYSTEMS
+  // ══════════════════════════════════════════════════════════════
+  {t:"Am I Infected? Lessons from Operating a Large-Scale IoT Security Diagnostic Service", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"Patching Up: Stakeholder Experiences of Security Updates for Connected Medical Devices", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"Security Implications of Malicious G-Codes in 3D Printing", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"Harness: Transparent Protection of Vehicle Control on Untrusted Android Automotive OS", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"The Ghost Navigator: Revisiting the Hidden Vulnerability of Localization in Autonomous Driving", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"'We can't change it overnight': Understanding Industry Perspectives on IoT Product Security", v:"sp", topic:"IoT & Embedded Systems"},
+  {t:"Too Much of a Good Thing: (In-)Security of Mandatory Security Software in South Korea", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"TORCHLIGHT: Shedding LIGHT on Real-World Attacks on Cloudless IoT Devices via Tor", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"Cyber-Physical Deception Through Coordinated IoT Honeypots", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"Discovering and Exploiting IoT Device Hidden Attributes in Smart Homes", v:"ccs", topic:"IoT & Embedded Systems"},
+  {t:"FlexEmu: Towards Flexible MCU Peripheral Emulation", v:"ccs", topic:"IoT & Embedded Systems"},
+  {t:"ZVDetector: State-Guided Vulnerability Detection System for Zigbee Devices", v:"ccs", topic:"IoT & Embedded Systems"},
+  {t:"IoTBec: An Accurate and Efficient Recurring Vulnerability Detection Framework for Black Box IoT", v:"ndss", topic:"IoT & Embedded Systems"},
+  {t:"HoneySat: A Network-based Satellite Honeypot Framework", v:"ndss", topic:"IoT & Embedded Systems"},
+  {t:"BACnet or 'BADnet'? On the (In)Security of Implicitly Reserved Fields in BACnet", v:"ndss", topic:"IoT & Embedded Systems"},
+  {t:"Discovering Blind-Trust Vulnerabilities in PLC Binaries via State Machine Recovery", v:"ndss", topic:"IoT & Embedded Systems"},
+  {t:"SECV: Securing Connected Vehicles with Hardware Trust Anchors", v:"ndss", topic:"IoT & Embedded Systems"},
+  {t:"Software Availability Protection in Cyber-Physical Systems", v:"usenix", topic:"IoT & Embedded Systems"},
+  {t:"'We just did not have that on the embedded system': Insights from Embedded CTF Competitions", v:"ccs", topic:"IoT & Embedded Systems"},
+
+  // ══════════════════════════════════════════════════════════════
+  // AUTONOMOUS VEHICLES & PHYSICAL ATTACKS
+  // ══════════════════════════════════════════════════════════════
+  {t:"Invisible but Detected: Physical Adversarial Shadow Attack on LiDAR Object Detection", v:"usenix", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"GNSS-WASP: GNSS Wide Area SPoofing", v:"usenix", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"Sound of Interference: Electromagnetic Eavesdropping on Digital Microphones", v:"usenix", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"One Video to Steal Them All: 3D-Printing IP Theft through Optical Side-Channels", v:"sp", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"BPSniff: Continuously Surveilling Private Blood Pressure Info in the Metaverse", v:"sp", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"ControlLoc: Physical-World Hijacking Attack on Camera-based Perception in Autonomous Driving", v:"ccs", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"Asymmetry Vulnerability and Physical Attacks on Online Map Construction for Autonomous Driving", v:"ccs", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"Towards Real-Time Defense Against Object-Based LiDAR Attacks in Autonomous Driving", v:"ccs", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"Security-Aware Sensor Fusion with MATE: the Multi-Agent Trust Estimator", v:"ccs", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"FlyTrap: Physical Distance-Pulling Attack Towards Camera-based Autonomous Target Tracking", v:"ndss", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"The Heat is On: Mitigating Vulnerabilities of Thermal Image Perception in Autonomous Systems", v:"ndss", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"PhantomMotion: Laser-Based Motion Injection Attacks on Wireless Security Surveillance Systems", v:"ndss", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"DualStrike: Accurate Real-time Eavesdropping and Injection of Keystrokes on Commodity Keyboards", v:"ndss", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"Threat from Windshield: Vehicle Windows as Involuntary Attack Sources on Automotive Voice Assistants", v:"ccs", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"Unknown Target: Uncovering and Detecting Novel In-Flight Attacks to Collision Avoidance (TCAS)", v:"ndss", topic:"Autonomous Systems & Physical Attacks"},
+  {t:"Automating Function-Level TARA for Automotive Full-Lifecycle Security", v:"ndss", topic:"Autonomous Systems & Physical Attacks"},
+
+  // ══════════════════════════════════════════════════════════════
+  // DEEPFAKES & SYNTHETIC MEDIA
+  // ══════════════════════════════════════════════════════════════
+  {t:"VoiceWukong: Benchmarking Deepfake Voice Detection", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"AudioMarkNet: Audio Watermarking for Deepfake Speech Detection", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"SafeSpeech: Robust and Universal Voice Protection Against Malicious Speech Synthesis", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"Whispering Under the Eaves: Protecting User Privacy Against ASR Systems", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"Chimera: Creating Digitally Signed Fake Photos by Fooling Deepfake Detectors", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"Characterizing the MrDeepFakes Sexual Deepfake Marketplace", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"Analyzing the AI Nudification Application Ecosystem", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"On the Proactive Generation of Unsafe Images From Text-To-Image Models", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"Exposing the Guardrails: Reverse-Engineering and Jailbreaking Safety Filters in DALL·E", v:"usenix", topic:"Deepfakes & Synthetic Media", award:"Distinguished Artifact"},
+  {t:"Light2Lie: Detecting Deepfake Images Using Physical Reflectance Laws", v:"ndss", topic:"Deepfakes & Synthetic Media"},
+  {t:"Combating Falsification of Speech Videos with Live Optical Signatures", v:"ccs", topic:"Deepfakes & Synthetic Media"},
+  {t:"Rethinking Fake Speech Detection: A Generalized Framework Leveraging Spectrogram Magnitude", v:"ndss", topic:"Deepfakes & Synthetic Media"},
+  {t:"ViGText: Deepfake Image Detection with Vision-Language Model Explanations and GNNs", v:"ndss", topic:"Deepfakes & Synthetic Media"},
+  {t:"When Translators Refuse to Translate: A Novel Attack to Speech Translation Systems", v:"usenix", topic:"Deepfakes & Synthetic Media"},
+  {t:"HARMONYCLOAK: Making Music Unlearnable for Generative AI", v:"sp", topic:"Deepfakes & Synthetic Media"},
+  {t:"LightShed: Defeating Perturbation-based Image Copyright Protections", v:"sp", topic:"Deepfakes & Synthetic Media"},
+  {t:"Towards Reliable Verification of Unauthorized Data Usage in Personalized Text-to-Image Models", v:"sp", topic:"Deepfakes & Synthetic Media"},
+  {t:"Towards Effective Prompt Stealing Attack against Text-to-Image Diffusion Models", v:"ndss", topic:"Deepfakes & Synthetic Media"},
+
+  // ══════════════════════════════════════════════════════════════
+  // SUPPLY CHAIN & SOFTWARE SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"An Industry Interview Study of Software Signing for Supply Chain Security", v:"usenix", topic:"Supply Chain & Software Security"},
+  {t:"Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets", v:"usenix", topic:"Supply Chain & Software Security"},
+  {t:"DISPATCH: Unraveling Security Patches from Entangled Code Changes", v:"usenix", topic:"Supply Chain & Software Security"},
+  {t:"The File That Contained the Keys Has Been Removed: Secret Leaks in Cloud Buckets", v:"sp", topic:"Supply Chain & Software Security"},
+  {t:"A Deep Dive Into How Open-Source Project Maintainers Review and Resolve Bug Bounty Reports", v:"sp", topic:"Supply Chain & Software Security"},
+  {t:"Study Club, Labor Union or Start-Up? Characterizing Teams in the Bug Bounty Ecosystem", v:"sp", topic:"Supply Chain & Software Security"},
+  {t:"SoK: Towards Effective Automated Vulnerability Repair", v:"usenix", topic:"Supply Chain & Software Security"},
+  {t:"NodeShield: Runtime Enforcement of Security-Enhanced SBOMs for Node.js", v:"ccs", topic:"Supply Chain & Software Security"},
+  {t:"Sleeping Giants: Activating Dormant Java Deserialization Gadget Chains", v:"ccs", topic:"Supply Chain & Software Security"},
+  {t:"What Gets Measured Gets Managed: Mitigating Supply Chain Attacks with Link Integrity Management", v:"ccs", topic:"Supply Chain & Software Security"},
+  {t:"Attacker Control and Bug Prioritization", v:"usenix", topic:"Supply Chain & Software Security"},
+  {t:"Finding Metadata Inconsistencies in Distributed File Systems via Cross-Node Operation Modeling", v:"usenix", topic:"Supply Chain & Software Security"},
+  {t:"From Noise to Signal: Precisely Identify Affected Packages of Known Vulnerabilities in npm", v:"ndss", topic:"Supply Chain & Software Security"},
+  {t:"Understanding the Status and Strategies of the Code Signing Abuse Ecosystem", v:"ndss", topic:"Supply Chain & Software Security"},
+  {t:"Action Required: A Mixed-Methods Study of Security Practices in GitHub Actions", v:"ndss", topic:"Supply Chain & Software Security"},
+  {t:"VulSCA: A Community-Level SCA Approach for Accurate C/C++ Supply Chain Vulnerability Analysis", v:"ndss", topic:"Supply Chain & Software Security"},
+  {t:"NEXUS: Towards Accurate and Scalable Mapping between Vulnerabilities and Attack Techniques", v:"ndss", topic:"Supply Chain & Software Security"},
+  {t:"Accurately Identifying the Vulnerability-Introducing Commit based on Differential Analysis", v:"ndss", topic:"Supply Chain & Software Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // BINARY ANALYSIS & REVERSE ENGINEERING
+  // ══════════════════════════════════════════════════════════════
+  {t:"BLens: Contrastive Captioning of Binary Functions using Ensemble Embedding", v:"usenix", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"NeuroScope: Reverse Engineering Deep Neural Network on Edge Devices", v:"usenix", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"PyLingual: Toward Perfect Decompilation of Evolving High-Level Languages", v:"sp", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"You Can't Judge a Binary by Its Header: Data-Code Separation for Non-Standard ARM Binaries", v:"sp", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"Walking The Last Mile: Studying Decompiler Output Correction in Practice", v:"ccs", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"BINALIGNER: Aligning Binary Code for Cross-Compilation Environment Diffing", v:"ndss", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"A Deep Dive into Function Inlining and its Security Implications for ML-based Binary Analysis", v:"ndss", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"Decompiling the Synergy: An Empirical Study of Human–LLM Teaming in Software Reverse Engineering", v:"ndss", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"DISA: Accurate Learning-based Static Disassembly with Attentions", v:"ccs", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"Enhancing Semantic-Aware Binary Diffing with High-Confidence Dynamic Instruction Alignment", v:"ndss", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"vSim: Semantics-Aware Value Extraction for Efficient Binary Code Similarity Analysis", v:"ndss", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"Recover Function Signature from Combined Constraints", v:"ccs", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"FIXX: FInding eXploits from eXamples", v:"usenix", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"Idioms: A Simple and Effective Framework for Turbo-Charging Local Neural Decompilation", v:"ndss", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"FidelityGPT: Correcting Decompilation Distortions with Retrieval Augmented Generation", v:"ndss", topic:"Binary Analysis & Reverse Engineering"},
+  {t:"Hardening Deep Neural Network Binaries against Reverse Engineering Attacks", v:"ccs", topic:"Binary Analysis & Reverse Engineering"},
+
+  // ══════════════════════════════════════════════════════════════
+  // CELLULAR & WIRELESS SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"AKMA+: Security and Privacy-Enhanced AKMA for 5G Communication", v:"usenix", topic:"Cellular & Wireless Security"},
+  {t:"Gotta Detect 'Em All: Fake Base Station and Multi-Step Attack Detection in Cellular Networks", v:"usenix", topic:"Cellular & Wireless Security"},
+  {t:"A Thorough Security Analysis of BLE Proximity Tracking Protocols", v:"usenix", topic:"Cellular & Wireless Security"},
+  {t:"Tracking You from a Thousand Miles Away! Turning Bluetooth Device into an Apple AirTag", v:"usenix", topic:"Cellular & Wireless Security", award:"Distinguished Artifact"},
+  {t:"Invade the Walled Garden: Evaluating GTP Security in Cellular Networks", v:"sp", topic:"Cellular & Wireless Security"},
+  {t:"AirSnitch: Demystifying and Breaking Client Isolation in Wi-Fi Networks", v:"ndss", topic:"Cellular & Wireless Security"},
+  {t:"CoreCrisis: Fuzzing of 5G Core Networks", v:"usenix", topic:"Cellular & Wireless Security"},
+  {t:"5G-RNAKA: A Random Number-based Authentication and Key Agreement Protocol for 5G", v:"ccs", topic:"Cellular & Wireless Security"},
+  {t:"BLERP: BLE Re-Pairing Attacks and Defenses", v:"ndss", topic:"Cellular & Wireless Security"},
+  {t:"WCDCAnalyzer: Scalable Security Analysis of Wi-Fi Certified Device Connectivity Protocols", v:"ndss", topic:"Cellular & Wireless Security"},
+  {t:"Small Cell, Big Risk: A Security Assessment of 4G LTE Femtocells in the Wild", v:"ndss", topic:"Cellular & Wireless Security"},
+  {t:"Uncovering hidden paths in 5G: Exploiting protocol tunneling and network boundary bridging", v:"ccs", topic:"Cellular & Wireless Security"},
+  {t:"Passive Multi-Target GUTI Identification via Visual-RF Correlation in LTE Networks", v:"ndss", topic:"Cellular & Wireless Security"},
+  {t:"GLaDoS: Location-aware Denial-of-Service of Cellular Networks", v:"usenix", topic:"Cellular & Wireless Security"},
+  {t:"BFId: Identity Inference Attacks utilizing Beamforming Feedback Information", v:"ccs", topic:"Cellular & Wireless Security"},
+  {t:"Formal Analysis of BLE Secure Connection Pairing and Revelation of the PE Confusion Attack", v:"ndss", topic:"Cellular & Wireless Security"},
+  {t:"Current Affairs: A Security Measurement Study of CCS EV Charging Deployments", v:"usenix", topic:"Cellular & Wireless Security"},
+  {t:"SIPConfusion: Exploiting SIP Semantic Ambiguities for Caller ID and SMS Spoofing", v:"ndss", topic:"Cellular & Wireless Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // XR / VR / AR SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"Principled and Automated Approach for Investigating AR/VR Attacks", v:"usenix", topic:"XR / VR / AR Security"},
+  {t:"SoK: Come Together – Unifying Security for Mixed Reality Deception Attack Ontology", v:"usenix", topic:"XR / VR / AR Security"},
+  {t:"Shadowed Realities: An Investigation of UI Attacks in WebXR", v:"usenix", topic:"XR / VR / AR Security"},
+  {t:"Virtual Reality, Real Problems: A Longitudinal Security Analysis of VR Firmware", v:"ccs", topic:"XR / VR / AR Security"},
+  {t:"PipID: Light-Pupillary Response Based User Authentication for VR", v:"ccs", topic:"XR / VR / AR Security"},
+  {t:"From Perception to Protection: A Developer-Centered Study of XR Security and Privacy Threats", v:"ndss", topic:"XR / VR / AR Security"},
+  {t:"Side-channel Inference of User Activities in AR/VR Using GPU Profiling", v:"ndss", topic:"XR / VR / AR Security"},
+  {t:"XR Devices Send WiFi Packets When They Should Not: Cross-Building Keylogging via Wireless Sensing", v:"ndss", topic:"XR / VR / AR Security"},
+  {t:"Seeing Through: Analyzing and Attacking Virtual Backgrounds in Video Calls", v:"usenix", topic:"XR / VR / AR Security"},
+  {t:"Harnessing Vital Sign Vibration Harmonics for XR User Authentication", v:"ccs", topic:"XR / VR / AR Security"},
+
+  // ══════════════════════════════════════════════════════════════
+  // PHISHING & SOCIAL ENGINEERING
+  // ══════════════════════════════════════════════════════════════
+  {t:"'Hey mum, I dropped my phone down the toilet': Investigating Hi Mum SMS Scams", v:"usenix", topic:"Phishing & Social Engineering"},
+  {t:"Evaluating the Effectiveness and Robustness of Visual Similarity-based Phishing Detection", v:"usenix", topic:"Phishing & Social Engineering"},
+  {t:"URL Inspection Tasks: Helping Users Detect Phishing Links in Emails", v:"usenix", topic:"Phishing & Social Engineering"},
+  {t:"Understanding the Efficacy of Phishing Training in Practice", v:"sp", topic:"Phishing & Social Engineering"},
+  {t:"Restricting the Link: Effects of Focused Attention and Time Delay on Phishing Warning", v:"sp", topic:"Phishing & Social Engineering"},
+  {t:"Phishing Susceptibility and the (In-)Effectiveness of Anti-Phishing Interventions in a Hospital", v:"ccs", topic:"Phishing & Social Engineering"},
+  {t:"Exposing the Roots of DNS Abuse: A Data-Driven Analysis of Phishing Domain Registrations", v:"ccs", topic:"Phishing & Social Engineering"},
+  {t:"LOKI: Proactively Discovering Online Scam Websites by Mining Toxic Search Queries", v:"ndss", topic:"Phishing & Social Engineering"},
+  {t:"PhishLang: A Real-Time, Fully Client-Side Phishing Detection Framework Using MobileBERT", v:"ndss", topic:"Phishing & Social Engineering"},
+  {t:"Phishing in Wonderland: Evaluating Learning-Based Ethereum Phishing Transaction Detection", v:"ndss", topic:"Phishing & Social Engineering"},
+  {t:"CtPhishCapture: Uncovering Credential-Theft-Based Phishing Scams Targeting Crypto Wallets", v:"ndss", topic:"Phishing & Social Engineering"},
+  {t:"Paladin: Defending LLM-enabled Phishing Emails with a New Trigger-Tag Paradigm", v:"ndss", topic:"Phishing & Social Engineering"},
+  {t:"'Is this a scam??': The nature and quality of Reddit discussion about scams", v:"ccs", topic:"Phishing & Social Engineering"},
+  {t:"Repairing Trust in Domain Name Disputes Practices: Insights from 25 Years of Squabbles", v:"ndss", topic:"Phishing & Social Engineering"},
+
+  // ══════════════════════════════════════════════════════════════
+  // BLOCKCHAIN & DECENTRALIZED SYSTEMS
+  // ══════════════════════════════════════════════════════════════
+  {t:"Auspex: Unveiling Inconsistency Bugs of Transaction Fee Mechanism in Blockchain", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"Deanonymizing Ethereum Validators: The P2P Network Has a Privacy Issue", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"Thunderdome: Timelock-Free Rationally-Secure Virtual Channels", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"BulletCT: Towards More Scalable Ring Confidential Transactions With Transparent Setup", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"Available Attestation: Towards a Reorg-Resilient Solution for Ethereum Proof-of-Stake", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"Voting-Bloc Entropy: A New Metric for DAO Decentralization", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"Forking the RANDAO: Manipulating Ethereum's Distributed Randomness Beacon", v:"ccs", topic:"Blockchain & Decentralized Systems"},
+  {t:"Aegis: Tethering a Blockchain with Primary-Chain Stake", v:"ccs", topic:"Blockchain & Decentralized Systems"},
+  {t:"Following Devils' Footprint: Towards Real-time Detection of Price Manipulation Attacks", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"Surviving in Dark Forest: Towards Evading Front-Running Bot Attacks", v:"usenix", topic:"Blockchain & Decentralized Systems"},
+  {t:"BunnyFinder: Finding Incentive Flaws for Ethereum Consensus", v:"ndss", topic:"Blockchain & Decentralized Systems"},
+  {t:"HOUSTON: Real-Time Anomaly Detection of Attacks against Ethereum DeFi Protocols", v:"ndss", topic:"Blockchain & Decentralized Systems"},
+  {t:"Light into Darkness: Demystifying Profit Strategies Throughout the MEV Bot Lifecycle", v:"ndss", topic:"Blockchain & Decentralized Systems"},
+  {t:"Denial of Sequencing Attacks in Ethereum Layer 2 Rollups", v:"ccs", topic:"Blockchain & Decentralized Systems"},
+  {t:"Towards a Formal Foundation for Blockchain ZK Rollups", v:"ccs", topic:"Blockchain & Decentralized Systems"},
+  {t:"MEVisor: High-Throughput MEV Discovery in DEXs with GPU Parallelism", v:"ndss", topic:"Blockchain & Decentralized Systems"},
+  {t:"On Frontrunning Risks in Batch-Order Fair Systems for Blockchains", v:"ccs", topic:"Blockchain & Decentralized Systems"},
+  {t:"Validity Is Not Enough: Uncovering Security Pitfall in Chainlink's Off-Chain Reporting Protocol", v:"ndss", topic:"Blockchain & Decentralized Systems"},
+
+  // ══════════════════════════════════════════════════════════════
+  // CRYPTOGRAPHY (Applied)
+  // ══════════════════════════════════════════════════════════════
+  {t:"Bundled Authenticated Key Exchange: Signal's Handshake Protocol and Post-Quantum Security", v:"usenix", topic:"Applied Cryptography"},
+  {t:"A Formal Analysis of Apple's iMessage PQ3 Protocol", v:"usenix", topic:"Applied Cryptography"},
+  {t:"Exploring How to Authenticate Application Messages in MLS: Post-Quantum and Anonymous", v:"usenix", topic:"Applied Cryptography"},
+  {t:"Oblivious Digital Tokens", v:"usenix", topic:"Applied Cryptography"},
+  {t:"Distributional Private Information Retrieval", v:"usenix", topic:"Applied Cryptography"},
+  {t:"MAESTRO: Multi-Party AES Using Lookup Tables", v:"usenix", topic:"Applied Cryptography"},
+  {t:"X.509DoS: Exploiting Denial-of-Service Vulnerabilities in Cryptographic Libraries", v:"usenix", topic:"Applied Cryptography"},
+  {t:"SparSamp: Efficient Provably Secure Steganography Based on Sparse Sampling", v:"usenix", topic:"Applied Cryptography"},
+  {t:"GraphAce: Secure Two-Party Graph Analysis Achieving Communication Efficiency", v:"usenix", topic:"Applied Cryptography"},
+  {t:"That's my perspective from 30 years: Challenges of Updating Cryptographic Code", v:"usenix", topic:"Applied Cryptography"},
+  {t:"Ringtail: Practical Two-Round Threshold Signatures from Learning with Errors", v:"sp", topic:"Applied Cryptography"},
+  {t:"Volatile and Persistent Memory for zkSNARKs via Algebraic Interactive Proofs", v:"sp", topic:"Applied Cryptography"},
+  {t:"TreePIR: Efficient Private Retrieval of Merkle Proofs via Tree Colorings", v:"sp", topic:"Applied Cryptography"},
+  {t:"Phecda: Post-Quantum Transparent zkSNARKs", v:"sp", topic:"Applied Cryptography"},
+  {t:"VerITAS: Verifying Image Transformations at Scale", v:"sp", topic:"Applied Cryptography"},
+  {t:"DataSeal: Ensuring the Verifiability of Private Computation on Encrypted Data", v:"sp", topic:"Applied Cryptography"},
+  {t:"Benchmarking Attacks on Learning with Errors", v:"sp", topic:"Applied Cryptography"},
+  {t:"TokenWeaver: Privacy Preserving and Post-Compromise Secure Attestation", v:"sp", topic:"Applied Cryptography"},
+  {t:"Watermarking Language Models for Many Adaptive Users", v:"sp", topic:"Applied Cryptography"},
+  {t:"CuKEM: A Concise and Unified Hybrid Key Encapsulation Mechanism", v:"ccs", topic:"Applied Cryptography"},
+  {t:"Breaking and Fixing Content-Defined Chunking", v:"ccs", topic:"Applied Cryptography"},
+  {t:"A Formal Analysis of Apple's iMessage PQ3 Protocol", v:"usenix", topic:"Applied Cryptography"},
+  {t:"ACTS: Attestations of Contents in TLS Sessions", v:"ndss", topic:"Applied Cryptography"},
+  {t:"CTng: Secure Certificate and Revocation Transparency", v:"ndss", topic:"Applied Cryptography"},
+  {t:"Looma: A Low-Latency PQTLS Authentication Architecture for Cloud Applications", v:"ndss", topic:"Applied Cryptography"},
+  {t:"Subversion-resilient key-exchange in the post-quantum world", v:"ccs", topic:"Applied Cryptography"},
+  {t:"On the Security of SSH Client Signatures", v:"ccs", topic:"Applied Cryptography"},
+  {t:"Security Analysis of Master-Password-Protected Password Management Protocols", v:"sp", topic:"Applied Cryptography"},
+  {t:"Finding SSH Strict Key Exchange Violations by State Learning", v:"ccs", topic:"Applied Cryptography"},
+
+  // ══════════════════════════════════════════════════════════════
+  // PRIVACY POLICIES & USABLE SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"As Advertised? Understanding the Impact of Influencer VPN Ads", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"A Stakeholder-Based Framework to Highlight Tensions when Implementing Privacy Features", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"Privacy Law Enforcement Under Centralized Governance: Analysis of Privacy Rectification Campaigns", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"Threat modeling is very formal and also very hard: Investigating Threat Modeling in OSS Projects", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"'I'm regretting that I hit run': In-situ Assessment of Potential Malware", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"'I'm trying to learn and I'm shooting myself in the foot': Beginners' Binary Exploitation Struggles", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"Digital Security Perceptions and Practices Around the World: WEIRD vs Non-WEIRD Comparison", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"Security and Privacy Advice for UPI Users in India", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"Expert Insights into Advanced Persistent Threats: Analysis, Attribution, and Challenges", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"High Stakes, Low Certainty: Evaluating Efficacy of High-Level IoCs in Ransomware Attribution", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"It's time. Time for digital security: An End User Study on Actionable Security Advice", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"Attitudes towards Client-Side Scanning in the USA and IT Security Experts", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"Transparency in Usable Privacy and Security Research: Scholars' Perspectives", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"You Have to Ignore the Dangers: User Perceptions of the Security Benefits of WhatsApp Mods", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"Security Perceptions of Users in Stablecoins: Advantages and Risks", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"It Should Be Easy but...: New Users' Experiences with Secret Management Tools", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"A Mixed-Methods Study of Open-Source Software Maintainers On Vulnerability Management", v:"usenix", topic:"Usable Security & Privacy"},
+  {t:"Mapping the Cloud: A Mixed-Methods Study of Cloud Security Configuration Challenges", v:"ndss", topic:"Usable Security & Privacy"},
+  {t:"Noise and Stress Don't Help With Learning: Cybersecurity Awareness in Manufacturing", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"'Why would money protect me from cyber bullying?': A Mixed-Methods Study of Personal Cyber Insurance", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"Digital Safety for Children with Intellectual Disabilities", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"Empowering Parents to Support Children's Online Security and Privacy: RCT Findings", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"Exploring Parent-Child Perspectives on Safety in Generative AI", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"How Blind and Low-Vision Users Manage Their Passwords", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"Privacy and security perceptions of Pakistani Facebook matrimony group users", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"Security and Privacy Experiences of First- and Second-Generation Pakistani Immigrants", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"Speedrunning the Maze: Meeting Regulatory Patching Deadlines in a Large Enterprise", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"Layered, Overlapping, and Inconsistent: Analysis of Multiple Privacy Policies of U.S. Banks", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"Moving Beyond Vendor Claims: Quantifying Security Training via U.S. SEC 10-K Filings", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"Ethics in Security and Privacy Research: A Data-Driven Assessment", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"Competing for Attention: An Interview Study with Participants of Cryptography Competitions", v:"ccs", topic:"Usable Security & Privacy"},
+  {t:"I'm pretty expert and I still screw it up: Insights into Designing Cryptographic Library APIs", v:"sp", topic:"Usable Security & Privacy"},
+  {t:"Anchors of Trust: A Usability Study on Cross-Device Authentication", v:"ndss", topic:"Usable Security & Privacy"},
+
+  // ══════════════════════════════════════════════════════════════
+  // MALWARE & THREAT INTELLIGENCE
+  // ══════════════════════════════════════════════════════════════
+  {t:"ORTHRUS: Achieving High Quality of Attribution in Provenance-based IDS", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"EvilEDR: Repurposing EDR as an Offensive Tool", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"Trust but Verify: An Assessment of Vulnerability Tagging Services", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"Catch-22: Uncovering Compromised Hosts using SSH Public Keys", v:"usenix", topic:"Malware & Threat Intelligence", award:"Distinguished Paper"},
+  {t:"The Conspiracy Money Machine: Uncovering Telegram's Conspiracy Channels", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"Characterizing and Detecting Propaganda-Spreading Accounts on Telegram", v:"usenix", topic:"Malware & Threat Intelligence", award:"Distinguished Paper"},
+  {t:"DarkGram: A Large-Scale Analysis of Cybercriminal Activity Channels on Telegram", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"Bots can Snoop: Uncovering and Mitigating Privacy Risks of Bots in Group Chats", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"MANTIS: Detection of Zero-Day Malicious Domains Leveraging Low Reputed Hosting Infrastructure", v:"sp", topic:"Malware & Threat Intelligence"},
+  {t:"Actively Understanding the Dynamics and Risks of the Threat Intelligence Ecosystem", v:"ndss", topic:"Malware & Threat Intelligence"},
+  {t:"Can IOCs impose cost? The effects of publishing threat intelligence on adversary behavior", v:"ccs", topic:"Malware & Threat Intelligence"},
+  {t:"Expert Insights into Advanced Persistent Threats", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"High Stakes, Low Certainty: IoCs in Ransomware Attribution", v:"usenix", topic:"Malware & Threat Intelligence"},
+  {t:"A Decade-long Landscape of Advanced Persistent Threats: Longitudinal Analysis", v:"ccs", topic:"Malware & Threat Intelligence"},
+  {t:"Slot: Provenance-Driven APT Detection through Graph Reinforcement Learning", v:"ccs", topic:"Malware & Threat Intelligence"},
+  {t:"OCR-APT: Reconstructing APT Stories from Audit Logs using Subgraph Anomaly Detection and LLMs", v:"ccs", topic:"Malware & Threat Intelligence"},
+  {t:"KnowHow: Automatically Applying High-Level CTI Knowledge for Provenance Analysis", v:"ndss", topic:"Malware & Threat Intelligence"},
+  {t:"Tickets to Hide: An Inside Look into the Anti-Abuse Ecosystem through Internal Abuse Data", v:"ndss", topic:"Malware & Threat Intelligence"},
+  {t:"TBTrackerX: Fantastic Trigger Bots and Where to Find Malicious Campaigns on X", v:"ndss", topic:"Malware & Threat Intelligence"},
+  {t:"Indicator of Benignity: An Industry View of False Positive in Malicious Domain Detection", v:"ndss", topic:"Malware & Threat Intelligence"},
+  {t:"Unveiling BYOVD Threats: Malware's Use and Abuse of Kernel Drivers", v:"ndss", topic:"Malware & Threat Intelligence"},
+  {t:"Beyond Raw Bytes: Towards Large Malware Language Models", v:"ndss", topic:"Malware & Threat Intelligence"},
+  {t:"Analyzing PDFs like Binaries: Adversarially Robust PDF Malware Analysis", v:"ccs", topic:"Malware & Threat Intelligence"},
+
+  // ══════════════════════════════════════════════════════════════
+  // PRIVACY-PRESERVING COMPUTATION
+  // ══════════════════════════════════════════════════════════════
+  {t:"LOHEN: Layer-wise Optimizations for Neural Network Inferences over Encrypted Data", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"PICACHV: Formally Verified Data Use Policy Enforcement for Secure Data Analytics", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"CoVault: Secure, Scalable Analytics of Personal Data", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"SpeechGuard: Recoverable and Customizable Speech Privacy Protection", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"HawkEye: Statically and Accurately Profiling Communication Cost in Multi-party Learning", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"Suda: An Efficient and Secure Unbalanced Data Alignment Framework for Vertical PPML", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"Improved Secure Two-party Computation from a Geometric Perspective", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"Dumbo-MPC: Efficient Fully Asynchronous MPC with Optimal Resilience", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"SelfDefend: LLMs Can Defend Themselves against Jailbreaking", v:"usenix", topic:"Privacy-Preserving Computation"},
+  {t:"THOR: Secure Transformer Inference with Homomorphic Encryption", v:"ccs", topic:"Privacy-Preserving Computation"},
+  {t:"Gibbon: Faster Secure Two-party Training of Gradient Boosting Decision Tree", v:"ccs", topic:"Privacy-Preserving Computation"},
+  {t:"Mosformer: Maliciously Secure Three-Party Inference Framework for Large Transformers", v:"ccs", topic:"Privacy-Preserving Computation"},
+  {t:"STIP: Three-Party Privacy-Preserving and Lossless Inference for Large Transformers", v:"ndss", topic:"Privacy-Preserving Computation"},
+  {t:"CryptGNN: Enabling Secure Inference for Graph Neural Networks", v:"ccs", topic:"Privacy-Preserving Computation"},
+  {t:"SCOPE: Expanding Client-Side Post-Processing for Efficient Privacy-Preserving Model Inference", v:"ccs", topic:"Privacy-Preserving Computation"},
+  {t:"ZORRO: Zero-Knowledge Robustness and Privacy for Split Learning", v:"ccs", topic:"Privacy-Preserving Computation"},
+  {t:"CRISP: An Efficient Cryptographic Framework for ML Inference Against Malicious Clients", v:"ndss", topic:"Privacy-Preserving Computation"},
+  {t:"Kangaroo: A Private and Amortized Inference Framework over WAN for Decision Tree Evaluation", v:"ndss", topic:"Privacy-Preserving Computation"},
+  {t:"CryptPEFT: Efficient and Private Neural Network Inference via Parameter-Efficient Fine-Tuning", v:"ndss", topic:"Privacy-Preserving Computation"},
+
+  // ══════════════════════════════════════════════════════════════
+  // WATERMARKING & IP PROTECTION
+  // ══════════════════════════════════════════════════════════════
+  {t:"Provably Robust Multi-bit Watermarking for AI-generated Text", v:"usenix", topic:"Watermarking & IP Protection"},
+  {t:"AUDIO WATERMARK: Dynamic and Harmless Watermark for Black-box Voice Dataset Copyright Protection", v:"usenix", topic:"Watermarking & IP Protection"},
+  {t:"RAG-WM: An Efficient Black-Box Watermarking Approach for RAG of LLMs", v:"ccs", topic:"Watermarking & IP Protection"},
+  {t:"SoK: Dataset Copyright Auditing in Machine Learning Systems", v:"sp", topic:"Watermarking & IP Protection"},
+  {t:"Towards Reliable Verification of Unauthorized Data Usage in Personalized Diffusion Models", v:"sp", topic:"Watermarking & IP Protection"},
+  {t:"VICTOR: Dataset Copyright Auditing in Video Recognition Systems", v:"ndss", topic:"Watermarking & IP Protection"},
+  {t:"Unshaken by Weak Embedding: Robust Probabilistic Watermarking for Dataset Copyright Protection", v:"ndss", topic:"Watermarking & IP Protection"},
+  {t:"PreferCare: Preference Dataset Copyright Protection in LLM Alignment", v:"ccs", topic:"Watermarking & IP Protection"},
+  {t:"Assuring Certified Database Utility in Privacy-Preserving Database Fingerprinting", v:"usenix", topic:"Watermarking & IP Protection"},
+  {t:"Secure Information Embedding in Forensic 3D Fingerprinting", v:"usenix", topic:"Watermarking & IP Protection"},
+  {t:"A Framework for Designing Provably Secure Steganography", v:"usenix", topic:"Watermarking & IP Protection"},
+  {t:"Dataset Reduction and Watermark Removal via Self-supervised Learning for Model Extraction Attack", v:"ndss", topic:"Watermarking & IP Protection"},
+  {t:"Character-Level Perturbations Disrupt LLM Watermarks", v:"ndss", topic:"Watermarking & IP Protection"},
+  {t:"Removal Attack and Defense on AI Generated Content Latent-based Watermarking", v:"ccs", topic:"Watermarking & IP Protection"},
+
+  // ══════════════════════════════════════════════════════════════
+  // HATE SPEECH, MISINFORMATION & CONTENT MODERATION
+  // ══════════════════════════════════════════════════════════════
+  {t:"HateBench: Benchmarking Hate Speech Detectors on LLM-Generated Content", v:"usenix", topic:"Hate Speech & Misinformation"},
+  {t:"From Meme to Threat: Hateful Meme Understanding and Content Generation in Vision Language Models", v:"usenix", topic:"Hate Speech & Misinformation"},
+  {t:"Tracking the Takes and Trajectories of English-Language News Narratives", v:"usenix", topic:"Hate Speech & Misinformation"},
+  {t:"Predictive Response Optimization: Using RL to Fight Online Social Network Abuse", v:"usenix", topic:"Hate Speech & Misinformation"},
+  {t:"Characterizing the Implementation of Censorship Policies in Chinese LLM Services", v:"ndss", topic:"Hate Speech & Misinformation"},
+  {t:"Revealing The Secret Power: How Algorithms Can Influence Content Visibility on Twitter/X", v:"ndss", topic:"Hate Speech & Misinformation"},
+  {t:"There is No War in Ba Sing Se: Global Analysis of Content Moderation in LLMs", v:"ndss", topic:"Hate Speech & Misinformation"},
+  {t:"Automatically Detecting Online Deceptive Patterns", v:"ccs", topic:"Hate Speech & Misinformation"},
+
+  // ══════════════════════════════════════════════════════════════
+  // AUTHENTICATION & ACCESS CONTROL
+  // ══════════════════════════════════════════════════════════════
+  {t:"OneTouch: Effortless 2FA Scheme to Secure Fingerprint Authentication with Wearable OTP Token", v:"usenix", topic:"Authentication & Access Control"},
+  {t:"Detecting Compromise of Passkey Storage on the Cloud", v:"usenix", topic:"Authentication & Access Control"},
+  {t:"A Framework for Abusability Analysis: The Case of Passkeys in Interpersonal Threat Models", v:"usenix", topic:"Authentication & Access Control"},
+  {t:"EPScan: Automated Detection of Excessive RBAC Permissions in Kubernetes Applications", v:"sp", topic:"Authentication & Access Control"},
+  {t:"Passwords and FIDO2 Are Meant to Be Secret: A Practical Secure Authentication Channel", v:"ccs", topic:"Authentication & Access Control"},
+  {t:"How to Design Secure Honey Vault Schemes", v:"ccs", topic:"Authentication & Access Control"},
+  {t:"Dangers Behind Access Control: Understanding Implicit Permissions in Kubernetes", v:"ccs", topic:"Authentication & Access Control"},
+  {t:"Encrypted Access Logging for Online Accounts: Device Attributions without Device Tracking", v:"usenix", topic:"Authentication & Access Control"},
+  {t:"May the Force Not be With You: Brute-Force Resistant Biometric Authentication", v:"ccs", topic:"Authentication & Access Control"},
+  {t:"Updatable aPAKE: Security Against Bulk Precomputation Attacks", v:"ccs", topic:"Authentication & Access Control"},
+  {t:"Know Me by My Pulse: Practical Continuous Authentication on Wearable Devices via PPG", v:"ndss", topic:"Authentication & Access Control"},
+  {t:"Breaking the Bulkhead: Demystifying Cross-Namespace Reference Vulnerabilities in Kubernetes", v:"ndss", topic:"Authentication & Access Control"},
+  {t:"The Dark Side of Flexibility: Detecting Risky Permission Chaining Attacks in Serverless Apps", v:"ndss", topic:"Authentication & Access Control"},
+  {t:"Through the Authentication Maze: Detecting Authentication Bypass Vulnerabilities in Firmware", v:"ndss", topic:"Authentication & Access Control"},
+
+  // ══════════════════════════════════════════════════════════════
+  // SATELLITE & SPACE SECURITY
+  // ══════════════════════════════════════════════════════════════
+  {t:"GNSS-WASP: GNSS Wide Area SPoofing", v:"usenix", topic:"Satellite & Space Security"},
+  {t:"Don't Look Up: Sensitive Internal Links in the Clear on GEO Satellites", v:"ccs", topic:"Satellite & Space Security"},
+  {t:"HoneySat: A Network-based Satellite Honeypot Framework", v:"ndss", topic:"Satellite & Space Security"},
+  {t:"Hiding an Ear in Plain Sight: Acoustic Eavesdropping with Telecom Fiber Optic Cables", v:"ndss", topic:"Satellite & Space Security"},
+];
+
+// Deduplicate
+const seen = new Set();
+const uniquePapers = papers.filter(p => {
+  if(seen.has(p.t)) return false;
+  seen.add(p.t);
+  return true;
+});
+
+// Build topic list
+const topicMap = {};
+uniquePapers.forEach(p => {
+  if(!topicMap[p.topic]) topicMap[p.topic] = [];
+  topicMap[p.topic].push(p);
+});
+const topics = Object.keys(topicMap).sort();
+
+let activeVenue = 'all';
+let activeTopic = null;
+
+function getVenueUrl(v) { return VENUE_URLS[v] || '#'; }
+function venueLabel(v) {
+  return {usenix:'USENIX',sp:'S&P',ccs:'CCS',ndss:'NDSS'}[v] || v.toUpperCase();
+}
+
+function buildNav() {
+  const nav = document.getElementById('topic-nav');
+  nav.innerHTML = '';
+  topics.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-btn';
+    btn.dataset.topic = t;
+    const count = topicMap[t].length;
+    btn.innerHTML = `<span>${t}</span><span class="topic-count">${count}</span>`;
+    btn.onclick = () => {
+      document.getElementById('content').querySelector(`[data-topic="${CSS.escape(t)}"]`)?.scrollIntoView({behavior:'smooth', block:'start'});
+      document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    nav.appendChild(btn);
+  });
+}
+
+function buildContent() {
+  const content = document.getElementById('content');
+  content.innerHTML = '';
+  topics.forEach(topic => {
+    const section = document.createElement('div');
+    section.className = 'topic-section';
+    section.dataset.topic = topic;
+    const papers = topicMap[topic];
+    section.innerHTML = `
+      <div class="topic-header">
+        <span class="topic-name">${topic}</span>
+        <span class="topic-pill venue-tag venue-usenix">${papers.length} papers</span>
+      </div>
+      <div class="papers-grid" id="grid-${topic.replace(/[^a-z0-9]/gi,'_')}">
+        ${papers.map(p => `
+          <div class="paper-row" data-venue="${p.v}" data-title="${p.t.toLowerCase()}">
+            <span class="venue-tag venue-${p.v}">${venueLabel(p.v)}</span>
+            <span class="paper-title"><a href="${getVenueUrl(p.v)}" target="_blank" rel="noopener">${p.t}</a></span>
+            ${p.award ? `<span class="paper-award">★ ${p.award}</span>` : '<span></span>'}
+          </div>
+        `).join('')}
+      </div>
+    `;
+    content.appendChild(section);
+  });
+}
+
+function updateStats() {
+  const rows = document.querySelectorAll('.paper-row:not(.hidden)');
+  document.getElementById('stats').textContent = `${rows.length} papers`;
+}
+
+function filterAll() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  let total = 0;
+  document.querySelectorAll('.paper-row').forEach(row => {
+    const venueMatch = activeVenue === 'all' || row.dataset.venue === activeVenue;
+    const textMatch = !q || row.dataset.title.includes(q);
+    const show = venueMatch && textMatch;
+    row.classList.toggle('hidden', !show);
+    if(show) total++;
+  });
+  // Hide empty sections
+  document.querySelectorAll('.topic-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.paper-row:not(.hidden)').length;
+    sec.style.display = visible ? '' : 'none';
+  });
+  document.getElementById('stats').textContent = `${total} papers`;
+}
+
+function toggleVenue(v, btn) {
+  activeVenue = v;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterAll();
+}
+
+buildNav();
+buildContent();
+updateStats();
+filterAll();
+</script>
+</body>
+</html>
