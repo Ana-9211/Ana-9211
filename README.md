@@ -5,7 +5,7 @@
 
 <br>
 
-`she/her` · **cs @ pesu** · still figuring a lot of this out
+`she/her` ï¿½ **cs @ pesu** ï¿½ still figuring a lot of this out
 
 <br>
 
@@ -20,7 +20,7 @@
 
 I like building things from scratch and then realizing halfway through that I did not fully understand the thing I was building. Most of my projects start as coursework and turn into rabbit holes.
 
-Right now, I am mostly interested in cybersecurity and systems — not because I already know a lot, but because I like the feeling of a concept finally clicking after being confused for a while.
+Right now, I am mostly interested in cybersecurity and systems ï¿½ not because I already know a lot, but because I like the feeling of a concept finally clicking after being confused for a while.
 
 This profile is less a portfolio and more a notebook. Expect some messy commits and projects that are clearly a first attempt.
 
@@ -41,16 +41,31 @@ There are no shortcuts. Each phase includes a checkpoint quiz that I must pass b
 
 ---
 
-### Projects
+### Building Now
 
-| Project | What it is | Notes |
-|---|---|---|
-| [sigma-detection-project](https://github.com/Ana-9211/sigma-detection-project) | 15 Sigma detection rules mapped to MITRE ATT&CK, validated against real attack log samples | My first real detection engineering project. I wrote a rule, watched it fail silently, and spent a long time figuring out why. |
-| [wavelink](https://github.com/Ana-9211/music_streaming) | Full-stack music streaming system with TCP socket streaming, SSL, and a custom browser UI | My first time doing raw socket streaming; it broke more times than I can count. |
-| [swarm health](https://github.com/Ana-9211/Swarm_Health) | Swarm health prediction with annotated visualizations | I learned that a chart looking “right” does not always mean it is correct. |
-| [traffic classifier](https://github.com/Ana-9211/traffic-classifier) | Network traffic classification pipeline | Built while learning networking fundamentals, so some of the early code is still a bit rough. |
-| [password 2.0](https://github.com/Ana-9211/Password-2.0) | Password security tool | Small but important; this was where I started thinking seriously about security. |
-| [standalone demos](https://github.com/Ana-9211/standalone-html-demos) | Collection of standalone HTML tools and experiments | Mostly “what if I tried this?” projects. |
+#### [Laptop Guardian](https://github.com/Ana-9211/Laptop-Guardian)
+
+A local-first Windows maintenance and audit platform built with PowerShell automation and a local React dashboard. It currently has a completed architecture and Phase 1 stabilization milestone, with Phase 2 premium dashboard work published. The roadmap continues toward guarded remediation in an Action Center and a Deep Network Guard with network visibility and scoped Windows Firewall rules.
+
+The project is actively developed and not presented as production-finished. Its design principles are local-only operation, Safe Mode by default, no AI-generated command execution, confirmation and verification for remediation, and no destructive operations in automated tests.
+
+### Selected Projects
+
+| Project | What it is |
+|---|---|
+| [MCP-Sentinel](https://github.com/Ana-9211/mcp-sentinel) | A Python and TypeScript/JavaScript security auditor for MCP servers. It combines static analysis with dynamic checks in deliberately local Docker fixtures, produces scored trust reports and SARIF, and enforces a loopback-only scope boundary. |
+| [CTF-trial-and-error](https://github.com/Ana-9211/CTF-trial-and-error) | A set of self-designed CTF challenges across web, crypto, forensics, and reverse engineering. Each challenge includes a runnable vulnerable fixture, an automated solve path, and an official technical writeup. |
+| [sigma-detection-project](https://github.com/Ana-9211/sigma-detection-project) | 15 Sigma detection rules mapped to MITRE ATT&CK and validated against real attack log samples. |
+| [wavelink](https://github.com/Ana-9211/music_streaming) | A full-stack music streaming system with TCP socket streaming, SSL, and a custom browser UI. |
+| [swarm health](https://github.com/Ana-9211/Swarm_Health) | Swarm health prediction with annotated visualizations. |
+| [traffic classifier](https://github.com/Ana-9211/traffic-classifier) | A network traffic classification pipeline built while learning networking fundamentals. |
+
+### Current Direction
+
+- **Laptop Guardian:** active development; Phase 1 stabilization and Phase 2 dashboard overhaul are published. Action Center and Deep Network Guard remain planned work.
+- **MCP-Sentinel:** security tooling for local MCP fixtures, with Python and TypeScript analysis, Docker-backed dynamic checks, and CI validation.
+- **CTF-trial-and-error:** an expanding challenge notebook focused on building, exploiting, testing, and explaining security flaws.
+- **Learning path:** Linux and Python fundamentals, networking, security fundamentals, ethical hacking, web security, blue-team detection engineering, and deeper security research.
 
 ---
 
@@ -59,7 +74,7 @@ There are no shortcuts. Each phase includes a checkpoint quiz that I must pass b
 - A rule or test passing does not mean it is testing the right thing.
 - Zero results are still a result; investigate before assuming there is nothing there.
 - Reading the full error message saves more time than guessing.
-- “It works” and “I understand why it works” are different milestones, and both matter.
+- ï¿½It worksï¿½ and ï¿½I understand why it worksï¿½ are different milestones, and both matter.
 
 ---
 
