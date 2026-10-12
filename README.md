@@ -12,34 +12,43 @@ My current interests are cybersecurity, systems, and the space between a tool th
 
 ### [Laptop Guardian](https://github.com/Ana-9211/Laptop-Guardian)
 
-A local-first Windows maintenance and audit platform built with PowerShell automation and a local React dashboard. The unreleased 1.1.0 line adds an Action Center (a closed catalog of typed, confirmed, verified and audited fixes), a Network Guard (firewall posture, new-listener and beaconing detection, encrypted DNS), and a hardened installer with an administrator trust boundary. Its CI and the real-Windows install test are still pending.
+A local-first Windows maintenance and audit tool: PowerShell agents, a zero-dependency Node bridge on 127.0.0.1, and a React dashboard. Safe Mode is on by default, fixes come from a closed catalog of typed actions, and each one is shown, confirmed, verified and logged.
 
-The project is actively developed, not presented as production-finished. Its boundaries are deliberate: local-only operation, Safe Mode by default, no AI-generated command execution, confirmation and verification for remediation, and no destructive operations in automated tests.
+**Checked on Linux:** type check, ESLint and an ASCII-only check are clean, the dashboard builds, and 177 of 181 Node tests pass (3 are skipped because they need Windows PowerShell, and 1 scheduler-polling test fails here, where PowerShell is absent). **Not yet checked:** the PowerShell/Pester suites, the installer, and CI on GitHub. The 1.1.0 line is unreleased.
 
 ## Selected work
 
 ### [MCP-Sentinel](https://github.com/Ana-9211/mcp-sentinel)
 
-A Python and TypeScript/JavaScript security auditor for MCP servers. It combines static analysis with dynamic checks in deliberately local Docker fixtures, produces scored trust reports and SARIF, and enforces a loopback-only scope boundary.
+A Python and TypeScript/JavaScript security auditor for MCP servers: 8 static checks over 6 attack surfaces, scored HTML reports, and SARIF 2.1.0 output. A guard refuses non-loopback dynamic targets.
+
+**Checked:** all 85 tests pass, Ruff is clean, it reports nothing on its own source or on either clean control fixture, and it flags the vulnerable fixtures I scanned (impl-flaws, ts-tool-injection, tool-poisoning). `--fail-on` returns a non-zero exit code. **Not checked here:** the Docker compose path (the dynamic tests start the fixtures as local processes instead).
 
 ### [CTF-trial-and-error](https://github.com/Ana-9211/CTF-trial-and-error)
 
-A set of self-designed CTF challenges across web, crypto, forensics, and reverse engineering. Each challenge includes a runnable vulnerable fixture, an automated solve path, and an official technical writeup.
+Four self-designed challenges (web, crypto, forensics, reverse engineering), each with a fixture, a solver and a writeup.
+
+**Checked:** I ran the RSA, forensics and reverse-engineering solvers and each recovered its flag. The VM flag is accepted by the shipped binary. For the SSRF challenge I confirmed the blocklist rejects the literal metadata IP but lets through its decimal, hex and octal forms, which resolve to 169.254.169.254. **Not checked:** the SSRF challenge end to end, since it needs Docker networking.
 
 ### [Sigma detection project](https://github.com/Ana-9211/sigma-detection-project)
 
-16 Sigma detection rules mapped to MITRE ATT&CK and validated against real attack log samples.
+16 Sigma rules tagged with MITRE ATT&CK techniques, with Splunk conversions and per-rule writeups.
 
-### More projects
+**Checked:** `sigma check` reports 0 errors on all 16 rules (run with the two MITRE tag validators off because they need network access). The committed validation snapshots show 215 matches across 15 rules; the 16th (the Sysmon T1087 rule) matched nothing, which the writeup documents and a Security-log rule (T1087b) then fixed. The raw EVTX corpus isn't in the repo, so I couldn't rerun those snapshots.
 
-- [Online Bookstore](https://github.com/Ana-9211/Software-Engineering-Project-): a MERN e-commerce course project, with sprint docs, CI and e2e tests.
-- [p2p_fun](https://github.com/Ana-9211/p2p_fun): a peer-to-peer swarm in Python with a tracker, DHT, Merkle-verified chunk transfer and encrypted storage.
-- [OS-Jackfruit](https://github.com/Ana-9211/OS-Jackfruit): a small C container runtime with a kernel module for memory enforcement.
-- [Standalone HTML demos](https://github.com/Ana-9211/standalone-html-demos): self-contained explainers (XOR cipher, password game, security paper index).
+## More projects
 
-### Earlier projects
+- [Online Bookstore](https://github.com/Ana-9211/Software-Engineering-Project-): a MERN course project with sprint docs and CI. The client lints, builds and passes its 23 tests. The server's MongoDB-backed tests could not run in my environment, so I have not confirmed them.
+- [PES-VCS](https://github.com/Ana-9211/PES1UG24CS058-pes-vcs): a small Git-style version control system in C. The Phase 1 and 2 unit tests and the end-to-end commit sequence pass.
+- [Swarm Health](https://github.com/Ana-9211/Swarm_Health): a linear-algebra swarm analyser. Rerunning the checker reproduced every number in its committed output, the FastAPI backend loads with 14 routes, and the frontend builds.
+- [p2p_fun](https://github.com/Ana-9211/p2p_fun): a peer-to-peer swarm in Python (tracker, DHT, Merkle and crypto modules). It compiles, and its two scripts run and print a node ID and a tracker signature, but there is no assertion-based test suite yet.
+- [OS-Jackfruit](https://github.com/Ana-9211/OS-Jackfruit): a small container runtime in C with a kernel memory monitor. The user-space supervisor and workloads compile; I could not build or load the kernel module here.
+- [Attendance Planner](https://github.com/Ana-9211/attendance): a browser and Python attendance calculator. Testing found and fixed a startup bug that stopped the web version's saved state from loading.
+- [Standalone HTML demos](https://github.com/Ana-9211/standalone-html-demos), [Password Analyzer](https://github.com/Ana-9211/Password-2.0) and [Password Chaos](https://github.com/Ana-9211/password): single-page tools that load in headless Chromium with no script errors.
 
-[Wavelink](https://github.com/Ana-9211/music_streaming) | [Swarm Health](https://github.com/Ana-9211/Swarm_Health) | [Traffic Classifier](https://github.com/Ana-9211/traffic-classifier) | [Password Analyzer](https://github.com/Ana-9211/Password-2.0) | [Attendance Planner](https://github.com/Ana-9211/attendance) | [PES-VCS](https://github.com/Ana-9211/PES1UG24CS058-pes-vcs)
+### Earlier projects, not run here
+
+[Wavelink](https://github.com/Ana-9211/music_streaming) (TCP/TLS audio streaming) and [Traffic Classifier](https://github.com/Ana-9211/traffic-classifier) (POX and Mininet) compile or parse cleanly, but need audio hardware or Mininet/POX, so I haven't run them. [Platformer](https://github.com/Ana-9211/Platformer) is a Unity project with scenes and assets but no scripts yet.
 
 ## Learning direction
 
@@ -49,4 +58,4 @@ I am working through these topics deliberately, with checkpoints and working exp
 
 > A passing test is not enough if it is testing the wrong thing.
 
-<sub>Still figuring a lot of this out. That is part of the work.</sub>
+<sub>Last audited 2026-10-12 by running each project's tests and solvers. "Not checked" means my environment couldn't run it, not that it fails.</sub>
